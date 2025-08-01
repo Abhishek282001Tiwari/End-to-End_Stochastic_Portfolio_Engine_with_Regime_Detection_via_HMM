@@ -1,3 +1,6 @@
+# Streamlit web app
+streamlit>=1.28.0
+
 # Core scientific computing
 numpy>=1.24.0
 scipy>=1.10.0
@@ -14,11 +17,13 @@ pymc>=5.0.0
 yfinance>=0.2.0
 pandas-datareader>=0.10.0
 quantlib>=1.31
+arch>=5.3.0
 riskfolio-lib>=4.0.0
 zipline-reloaded>=2.2.0
 
 # Optimization
 cvxpy>=1.3.0
+pyportfolioopt>=1.5.0
 gurobipy>=10.0.0
 mosek>=10.0.0
 
@@ -27,7 +32,6 @@ matplotlib>=3.7.0
 seaborn>=0.12.0
 plotly>=5.15.0
 dash>=2.10.0
-scipy>=1.10.0
 
 # Database and data storage
 sqlalchemy>=2.0.0

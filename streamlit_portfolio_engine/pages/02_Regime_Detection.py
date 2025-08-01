@@ -27,6 +27,7 @@ sys.path.append('src')
 
 from src.models.hmm.hmm_engine import AdvancedBaumWelchHMM
 from src.utils.performance_analytics import PerformanceAnalytics
+from streamlit_portfolio_engine.utils import safe_rerun
 
 def render_regime_detection():
     """Render the regime detection dashboard"""
@@ -700,7 +701,7 @@ def reset_regime_model():
         del st.session_state.regime_model
     
     st.success("🔄 Regime model reset successfully!")
-    st.experimental_rerun()
+    safe_rerun()
 
 def export_regime_results():
     """Export regime detection results to CSV"""

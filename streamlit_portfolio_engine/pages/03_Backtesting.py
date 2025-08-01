@@ -27,6 +27,7 @@ sys.path.append('src')
 from src.backtesting.framework.advanced_backtesting import create_advanced_backtesting_framework, BacktestMode
 from src.backtesting.execution.trading_simulator import TradingSimulator, MarketImpactModel
 from src.optimization.portfolio.stochastic_optimizer import PortfolioOptimizationEngine
+from streamlit_portfolio_engine.utils import safe_rerun
 
 def render_backtesting():
     """Render the backtesting interface"""
@@ -1009,7 +1010,7 @@ def reset_backtest_results():
         del st.session_state.backtest_results
     
     st.success("🔄 Backtest results cleared!")
-    st.experimental_rerun()
+    safe_rerun()
 
 def export_backtest_results():
     """Export backtest results to CSV"""

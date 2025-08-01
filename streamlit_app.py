@@ -27,19 +27,48 @@ from typing import Dict, List, Optional, Any
 import warnings
 
 # Add src to path for imports
-sys.path.append('src')
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'src'))
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-# Import portfolio engine components
-from src.utils.config import get_config
-from src.utils.logging_config import setup_logging, get_logger
-from src.data.ingestion.data_sources import create_data_pipeline
-from src.models.hmm.hmm_engine import AdvancedBaumWelchHMM
-from src.optimization.portfolio.stochastic_optimizer import PortfolioOptimizationEngine
-from src.backtesting.framework.advanced_backtesting import create_advanced_backtesting_framework, BacktestMode
-from src.risk.monitoring.risk_monitor import RealTimeRiskMonitor, RiskLimits
-from src.simulation.monte_carlo_engine import MonteCarloEngine, SimulationConfig
+# Import portfolio engine components with error handling
+try:
+    from src.utils.config import get_config
+    from src.utils.logging_config import setup_logging, get_logger
+    from src.data.ingestion.data_sources import create_data_pipeline
+    from src.models.hmm.hmm_engine import AdvancedBaumWelchHMM
+    from src.optimization.portfolio.stochastic_optimizer import PortfolioOptimizationEngine
+    from src.backtesting.framework.advanced_backtesting import create_advanced_backtesting_framework, BacktestMode
+    from src.risk.monitoring.risk_monitor import RealTimeRiskMonitor, RiskLimits
+    from src.simulation.monte_carlo_engine import MonteCarloEngine, SimulationConfig
+except ImportError as e:
+    st.error(f"Import error: {e}")
+    st.error("Please ensure all dependencies are installed and the src directory structure is correct.")
+    st.info("Run: pip install -r requirements.txt")
+    st.stop()
 
 warnings.filterwarnings("ignore", category=FutureWarning)
+
+# Streamlit version compatibility helpers
+def safe_rerun():
+    """Version-safe rerun function"""
+    try:
+        st.rerun()  # New syntax (Streamlit >= 1.27.0)
+    except AttributeError:
+        st.experimental_rerun()  # Old syntax fallback
+
+def safe_cache_data(func=None, **kwargs):
+    """Version-safe cache_data decorator"""
+    try:
+        return st.cache_data(**kwargs)(func) if func else st.cache_data(**kwargs)
+    except AttributeError:
+        return st.experimental_memo(**kwargs)(func) if func else st.experimental_memo(**kwargs)
+
+def safe_cache_resource(func=None, **kwargs):
+    """Version-safe cache_resource decorator"""
+    try:
+        return st.cache_resource(**kwargs)(func) if func else st.cache_resource(**kwargs)
+    except AttributeError:
+        return st.experimental_singleton(**kwargs)(func) if func else st.experimental_singleton(**kwargs)
 
 # Configure Streamlit page
 st.set_page_config(
@@ -226,7 +255,7 @@ class PortfolioEngineApp:
             
             if selected_page != st.session_state.current_page:
                 st.session_state.current_page = selected_page
-                st.experimental_rerun()
+                safe_rerun()
             
             st.markdown("---")
             
@@ -302,6 +331,7 @@ class PortfolioEngineApp:
                     st.metric("Portfolio Value", f"${latest_value:.2f}", f"{daily_change:.2%}")
                     st.metric("Assets", len(st.session_state.selected_symbols))
     
+    @safe_cache_data
     def _load_portfolio_data(self, start_date: datetime, end_date: datetime):
         """Load portfolio data from data sources"""
         

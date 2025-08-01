@@ -28,6 +28,7 @@ sys.path.append('src')
 
 from src.simulation.monte_carlo_engine import MonteCarloEngine, SimulationConfig
 from src.simulation.stochastic_processes import GeometricBrownianMotion, JumpDiffusionProcess, MeanReversionProcess
+from streamlit_portfolio_engine.utils import safe_rerun
 
 def render_monte_carlo():
     """Render the Monte Carlo simulations dashboard"""
@@ -1263,7 +1264,7 @@ def reset_simulation_results():
         del st.session_state.monte_carlo_results
     
     st.success("🔄 Simulation results cleared!")
-    st.experimental_rerun()
+    safe_rerun()
 
 def export_simulation_results():
     """Export Monte Carlo simulation results"""

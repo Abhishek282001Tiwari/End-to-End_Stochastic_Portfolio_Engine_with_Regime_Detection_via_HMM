@@ -28,6 +28,7 @@ sys.path.append('src')
 
 from src.utils.performance_analytics import PerformanceAnalytics
 from src.analysis.attribution.brinson_attribution import BrinsonAttribution
+from streamlit_portfolio_engine.utils import safe_rerun
 
 def render_performance_analytics():
     """Render the performance analytics dashboard"""
@@ -1068,7 +1069,7 @@ def reset_performance_analysis():
         del st.session_state.performance_results
     
     st.success("🔄 Performance analysis reset!")
-    st.experimental_rerun()
+    safe_rerun()
 
 def export_performance_report():
     """Export comprehensive performance report"""
