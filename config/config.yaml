@@ -1,0 +1,104 @@
+# Portfolio Engine Configuration
+app:
+  name: "Stochastic Portfolio Engine"
+  version: "1.0.0"
+  debug: false
+
+# Streamlit Configuration
+streamlit:
+  host: "0.0.0.0"
+  port: 8501
+  title: "Stochastic Portfolio Engine"
+  layout: "wide"
+  initial_sidebar_state: "expanded"
+  theme:
+    primary_color: "#1f77b4"
+    background_color: "#ffffff"
+    secondary_background_color: "#f0f2f6"
+    text_color: "#262730"
+
+# API Keys (use environment variables)
+api_keys:
+  alpha_vantage: ${ALPHA_VANTAGE_API_KEY}
+  polygon_io: ${POLYGON_API_KEY}
+  quandl: ${QUANDL_API_KEY}
+  bloomberg: ${BLOOMBERG_API_KEY}
+
+data:
+  sources:
+    yahoo: true
+    alpha_vantage: false
+    quandl: false
+    bloomberg: false
+  
+  refresh_frequency: "1H"  # 1 hour
+  lookback_days: 252  # 1 year of trading days
+  
+  database:
+    type: "postgresql"
+    host: "localhost"
+    port: 5432
+    name: "portfolio_db"
+    
+  cache:
+    type: "redis"
+    host: "localhost"
+    port: 6379
+    ttl: 3600  # 1 hour
+
+hmm:
+  n_components: 3  # Bull, Bear, Sideways
+  covariance_type: "full"
+  n_iter: 100
+  random_state: 42
+  
+  features:
+    - "returns"
+    - "volatility"
+    - "volume"
+    - "vix"
+    - "yield_curve_slope"
+  
+  training:
+    window_size: 252  # 1 year
+    update_frequency: "1D"  # Daily
+    
+portfolio:
+  optimization:
+    method: "mean_variance"  # mean_variance, black_litterman, risk_parity
+    rebalance_frequency: "1W"  # Weekly
+    transaction_costs: 0.001  # 10 bps
+    
+  constraints:
+    max_weight: 0.2  # 20% max per asset
+    min_weight: 0.0
+    leverage: 1.0  # No leverage
+    
+  risk:
+    target_volatility: 0.15  # 15% annual volatility
+    max_drawdown: 0.2  # 20% max drawdown
+    var_confidence: 0.05  # 5% VaR
+    
+backtesting:
+  start_date: "2010-01-01"
+  end_date: "2023-12-31"
+  initial_capital: 1000000  # $1M
+  benchmark: "SPY"
+  
+  metrics:
+    - "total_return"
+    - "sharpe_ratio"
+    - "max_drawdown"
+    - "volatility"
+    - "var"
+    - "cvar"
+    
+logging:
+  level: "INFO"
+  format: "{time:YYYY-MM-DD HH:mm:ss} | {level} | {name}:{function}:{line} | {message}"
+  
+monitoring:
+  alerts:
+    max_drawdown_threshold: 0.15
+    position_limit_breach: true
+    data_quality_issues: true
