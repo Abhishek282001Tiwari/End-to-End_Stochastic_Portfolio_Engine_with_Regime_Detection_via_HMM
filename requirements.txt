@@ -1,0 +1,53 @@
+# Core scientific computing
+numpy>=1.24.0
+scipy>=1.10.0
+pandas>=2.0.0
+numba>=0.57.0
+
+# Machine learning and statistics
+scikit-learn>=1.3.0
+statsmodels>=0.14.0
+hmmlearn>=0.3.0
+pymc>=5.0.0
+
+# Financial data and analysis
+yfinance>=0.2.0
+pandas-datareader>=0.10.0
+quantlib>=1.31
+riskfolio-lib>=4.0.0
+zipline-reloaded>=2.2.0
+
+# Optimization
+cvxpy>=1.3.0
+gurobipy>=10.0.0
+mosek>=10.0.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.15.0
+dash>=2.10.0
+scipy>=1.10.0
+
+# Database and data storage
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.0
+redis>=4.5.0
+arctic>=1.79.4
+
+# Async and streaming
+asyncio
+aiohttp>=3.8.0
+websockets>=11.0.0
+kafka-python>=2.0.0
+requests>=2.31.0
+
+# Utilities
+pydantic>=2.0.0
+click>=8.1.0
+python-dotenv>=1.0.0
+loguru>=0.7.0
+pytest>=7.4.0
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.5.0
