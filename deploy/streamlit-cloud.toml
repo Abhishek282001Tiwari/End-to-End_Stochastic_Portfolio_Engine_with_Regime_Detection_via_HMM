@@ -1,0 +1,99 @@
+# Streamlit Cloud deployment configuration
+# This file should be named 'streamlit_app.toml' and placed in .streamlit/ folder for cloud deployment
+
+[global]
+# Your app's main file
+main_file = "streamlit_app.py"
+
+# Python version
+python_version = "3.11"
+
+# App title
+title = "Stochastic Portfolio Engine"
+
+# App description
+description = "Advanced portfolio management system with HMM regime detection, backtesting, and Monte Carlo analysis"
+
+# App category
+category = "Finance"
+
+# Repository information
+repository = "https://github.com/your-username/stochastic-portfolio-engine"
+
+# Contact information
+author = "Your Name"
+email = "your.email@example.com"
+
+[server]
+# Server configuration
+port = 8501
+baseUrlPath = ""
+enableCORS = false
+enableXsrfProtection = true
+
+# File upload settings
+maxUploadSize = 200
+maxMessageSize = 200
+
+# Performance settings
+runOnSave = true
+allowRunOnSave = true
+
+[browser]
+# Browser settings
+gatherUsageStats = false
+
+[theme]
+# Theme configuration matching .streamlit/config.toml
+primaryColor = "#1f77b4"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f0f2f6"
+textColor = "#262730"
+font = "sans serif"
+
+[client]
+# Client configuration
+caching = true
+displayEnabled = true
+
+[runner]
+# Runner configuration
+magicEnabled = true
+installTracer = false
+fixMatplotlib = true
+
+# Dependencies
+[dependencies]
+# Main requirements
+streamlit = ">=1.28.0"
+plotly = ">=5.15.0"
+pandas = ">=2.0.0"
+numpy = ">=1.24.0"
+yfinance = ">=0.2.0"
+scikit-learn = ">=1.3.0"
+scipy = ">=1.10.0"
+
+# Additional requirements
+pyyaml = ">=6.0"
+requests = ">=2.31.0"
+
+[secrets]
+# Environment variables for Streamlit Cloud
+# These should be set in the Streamlit Cloud dashboard under "Secrets"
+# Format: KEY = "value"
+
+# Example secrets (set these in Streamlit Cloud dashboard):
+# ALPHA_VANTAGE_API_KEY = "your_api_key_here"
+# POLYGON_API_KEY = "your_api_key_here"
+# QUANDL_API_KEY = "your_api_key_here"
+
+[build]
+# Build configuration
+# Commands to run before starting the app
+pre_build = [
+    "pip install --upgrade pip",
+    "pip install -r streamlit_requirements.txt"
+]
+
+# Health check endpoint
+health_check_path = "/_stcore/health"

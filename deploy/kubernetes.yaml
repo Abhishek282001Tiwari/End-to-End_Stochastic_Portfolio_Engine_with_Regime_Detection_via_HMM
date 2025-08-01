@@ -1,0 +1,160 @@
+# Kubernetes deployment for Stochastic Portfolio Engine
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portfolio-engine-deployment
+  labels:
+    app: portfolio-engine
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: portfolio-engine
+  template:
+    metadata:
+      labels:
+        app: portfolio-engine
+    spec:
+      containers:
+      - name: portfolio-engine
+        image: stochastic-portfolio-engine:latest
+        ports:
+        - containerPort: 8501
+        env:
+        - name: PYTHONPATH
+          value: "/app"
+        - name: STREAMLIT_SERVER_PORT
+          value: "8501"
+        - name: STREAMLIT_SERVER_ADDRESS
+          value: "0.0.0.0"
+        - name: ALPHA_VANTAGE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: api-keys
+              key: alpha-vantage
+        - name: POLYGON_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: api-keys
+              key: polygon
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /_stcore/health
+            port: 8501
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /_stcore/health
+            port: 8501
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config
+        - name: data-volume
+          mountPath: /app/data
+      volumes:
+      - name: config-volume
+        configMap:
+          name: portfolio-config
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: portfolio-data-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: portfolio-engine-service
+spec:
+  selector:
+    app: portfolio-engine
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8501
+  type: LoadBalancer
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: portfolio-config
+data:
+  config.yaml: |
+    app:
+      name: "Stochastic Portfolio Engine"
+      version: "1.0.0"
+      debug: false
+    
+    streamlit:
+      host: "0.0.0.0"
+      port: 8501
+      title: "Stochastic Portfolio Engine"
+      layout: "wide"
+    
+    data:
+      sources:
+        yahoo: true
+        alpha_vantage: false
+      refresh_frequency: "1H"
+    
+    logging:
+      level: "INFO"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: api-keys
+type: Opaque
+stringData:
+  alpha-vantage: "YOUR_ALPHA_VANTAGE_API_KEY"
+  polygon: "YOUR_POLYGON_API_KEY"
+  quandl: "YOUR_QUANDL_API_KEY"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: portfolio-data-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: portfolio-engine-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: portfolio-engine-deployment
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80

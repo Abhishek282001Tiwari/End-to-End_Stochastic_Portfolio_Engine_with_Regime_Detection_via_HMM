@@ -1,0 +1,68 @@
+{
+  "name": "stochastic-portfolio-engine",
+  "description": "Advanced portfolio management system with HMM regime detection and Monte Carlo analysis",
+  "keywords": [
+    "portfolio",
+    "finance",
+    "hmm",
+    "monte-carlo",
+    "streamlit",
+    "backtesting",
+    "risk-management"
+  ],
+  "website": "https://github.com/your-username/stochastic-portfolio-engine",
+  "repository": "https://github.com/your-username/stochastic-portfolio-engine",
+  "logo": "",
+  "success_url": "/",
+  "stack": "heroku-22",
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "standard-1x"
+    }
+  },
+  "addons": [
+    {
+      "plan": "heroku-redis:mini",
+      "as": "REDIS"
+    }
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ],
+  "env": {
+    "PYTHONPATH": {
+      "description": "Python path for module imports",
+      "value": "/app"
+    },
+    "STREAMLIT_SERVER_PORT": {
+      "description": "Port for Streamlit server",
+      "value": "$PORT"
+    },
+    "STREAMLIT_SERVER_ADDRESS": {
+      "description": "Address for Streamlit server",
+      "value": "0.0.0.0"
+    },
+    "ALPHA_VANTAGE_API_KEY": {
+      "description": "Alpha Vantage API key for market data",
+      "required": false
+    },
+    "POLYGON_API_KEY": {
+      "description": "Polygon.io API key for market data",
+      "required": false
+    },
+    "QUANDL_API_KEY": {
+      "description": "Quandl API key for economic data",
+      "required": false
+    },
+    "BLOOMBERG_API_KEY": {
+      "description": "Bloomberg API key for premium data",
+      "required": false
+    }
+  },
+  "scripts": {
+    "postdeploy": "echo 'Deployment complete!'"
+  }
+}
