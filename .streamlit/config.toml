@@ -1,0 +1,70 @@
+[global]
+# Streamlit configuration for Portfolio Engine
+
+# Development vs production mode
+developmentMode = true
+
+# Show error details
+showErrorDetails = true
+
+# Data frame serialization engine
+dataFrameSerialization = "arrow"
+
+[server]
+# Server configuration
+port = 8501
+baseUrlPath = ""
+enableCORS = false
+enableXsrfProtection = true
+maxUploadSize = 200
+maxMessageSize = 200
+enableWebsocketCompression = false
+
+# Address to listen on
+address = "0.0.0.0"
+
+# Enable automatic file watcher
+fileWatcherType = "auto"
+
+# Cookie settings
+cookieSecret = "portfolio-engine-secret-key"
+
+[browser]
+# Browser configuration
+gatherUsageStats = false
+serverAddress = "localhost"
+serverPort = 8501
+
+[logger]
+# Logging configuration
+level = "info"
+messageFormat = "%(asctime)s %(message)s"
+
+[client]
+# Client configuration
+caching = true
+displayEnabled = true
+showErrorDetails = true
+
+[runner]
+# Runner configuration
+magicEnabled = true
+installTracer = false
+fixMatplotlib = true
+postScriptGC = true
+fastReruns = true
+enforceSerializableSessionState = false
+
+[theme]
+# Theme configuration
+primaryColor = "#1f77b4"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f0f2f6"
+textColor = "#262730"
+font = "sans serif"
+
+[deprecation]
+# Deprecation warnings
+showfileUploaderEncoding = false
+showImageFormat = false
+showPyplotGlobalUse = false
