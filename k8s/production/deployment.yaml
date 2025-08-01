@@ -1,0 +1,224 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portfolio-engine-blue
+  namespace: production
+  labels:
+    app: portfolio-engine
+    color: blue
+    version: v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: portfolio-engine
+      color: blue
+  template:
+    metadata:
+      labels:
+        app: portfolio-engine
+        color: blue
+        version: v1
+    spec:
+      containers:
+      - name: portfolio-engine
+        image: ghcr.io/your-org/portfolio-engine:IMAGE_TAG
+        ports:
+        - containerPort: 8050
+          name: http
+        - containerPort: 8080
+          name: metrics
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        - name: REDIS_URL
+          value: "redis://redis-cluster:6379"
+        - name: POSTGRES_URL
+          valueFrom:
+            secretKeyRef:
+              name: database-secret
+              key: postgres-url
+        - name: ALPHA_VANTAGE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: api-keys
+              key: alpha-vantage
+        - name: QUANDL_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: api-keys
+              key: quandl
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8050
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8050
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config
+        - name: data-volume
+          mountPath: /app/data
+        - name: logs-volume
+          mountPath: /app/logs
+      volumes:
+      - name: config-volume
+        configMap:
+          name: portfolio-config
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: portfolio-data-pvc
+      - name: logs-volume
+        persistentVolumeClaim:
+          claimName: portfolio-logs-pvc
+      imagePullSecrets:
+      - name: ghcr-secret
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      tolerations:
+      - key: "portfolio-engine"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - portfolio-engine
+              topologyKey: kubernetes.io/hostname
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portfolio-engine-green
+  namespace: production
+  labels:
+    app: portfolio-engine
+    color: green
+    version: v1
+spec:
+  replicas: 0  # Initially scaled to 0
+  selector:
+    matchLabels:
+      app: portfolio-engine
+      color: green
+  template:
+    metadata:
+      labels:
+        app: portfolio-engine
+        color: green
+        version: v1
+    spec:
+      containers:
+      - name: portfolio-engine
+        image: ghcr.io/your-org/portfolio-engine:IMAGE_TAG
+        ports:
+        - containerPort: 8050
+          name: http
+        - containerPort: 8080
+          name: metrics
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        - name: REDIS_URL
+          value: "redis://redis-cluster:6379"
+        - name: POSTGRES_URL
+          valueFrom:
+            secretKeyRef:
+              name: database-secret
+              key: postgres-url
+        - name: ALPHA_VANTAGE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: api-keys
+              key: alpha-vantage
+        - name: QUANDL_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: api-keys
+              key: quandl
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8050
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8050
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config
+        - name: data-volume
+          mountPath: /app/data
+        - name: logs-volume
+          mountPath: /app/logs
+      volumes:
+      - name: config-volume
+        configMap:
+          name: portfolio-config
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: portfolio-data-pvc
+      - name: logs-volume
+        persistentVolumeClaim:
+          claimName: portfolio-logs-pvc
+      imagePullSecrets:
+      - name: ghcr-secret
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      tolerations:
+      - key: "portfolio-engine"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - portfolio-engine
+              topologyKey: kubernetes.io/hostname
