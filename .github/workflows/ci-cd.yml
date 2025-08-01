@@ -1,0 +1,311 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  release:
+    types: [ published ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: portfolio-engine
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9, 3.10, 3.11]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Cache pip dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-cov pytest-asyncio flake8 black isort mypy
+
+    - name: Lint with flake8
+      run: |
+        flake8 src --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 src --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
+
+    - name: Check code formatting with black
+      run: black --check src
+
+    - name: Check import sorting with isort
+      run: isort --check-only src
+
+    - name: Type checking with mypy
+      run: mypy src --ignore-missing-imports
+
+    - name: Run tests with pytest
+      run: |
+        pytest tests/ -v --cov=src --cov-report=xml --cov-report=html
+      env:
+        PYTHONPATH: ${{ github.workspace }}/src
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+
+    - name: Upload Trivy scan results to GitHub Security tab
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: 'trivy-results.sarif'
+
+    - name: Run Bandit security linter
+      run: |
+        pip install bandit
+        bandit -r src -f json -o bandit-report.json || true
+
+    - name: Upload security scan results
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-scan-results
+        path: |
+          trivy-results.sarif
+          bandit-report.json
+
+  build:
+    needs: [test, security-scan]
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Log in to Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Extract metadata
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ env.REGISTRY }}/${{ github.repository }}/${{ env.IMAGE_NAME }}
+        tags: |
+          type=ref,event=branch
+          type=ref,event=pr
+          type=semver,pattern={{version}}
+          type=semver,pattern={{major}}.{{minor}}
+          type=sha,prefix={{branch}}-
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./docker/Dockerfile
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        platforms: linux/amd64,linux/arm64
+
+  deploy-staging:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
+    environment: staging
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Configure kubectl
+      uses: azure/k8s-set-context@v3
+      with:
+        method: kubeconfig
+        kubeconfig: ${{ secrets.KUBE_CONFIG_STAGING }}
+
+    - name: Deploy to staging
+      run: |
+        # Update image tag in deployment
+        sed -i 's|IMAGE_TAG|${{ github.sha }}|g' k8s/staging/deployment.yaml
+        
+        # Apply Kubernetes manifests
+        kubectl apply -f k8s/staging/
+        
+        # Wait for deployment to complete
+        kubectl rollout status deployment/portfolio-engine -n staging --timeout=300s
+
+    - name: Run integration tests
+      run: |
+        # Wait for service to be ready
+        kubectl wait --for=condition=ready pod -l app=portfolio-engine -n staging --timeout=300s
+        
+        # Run integration tests against staging
+        python -m pytest tests/integration/ --staging-url=https://staging.portfolio-engine.com
+
+    - name: Notify deployment status
+      if: always()
+      uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        channel: '#deployments'
+        webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+
+  deploy-production:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release' && github.event.action == 'published'
+    environment: production
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Configure kubectl
+      uses: azure/k8s-set-context@v3
+      with:
+        method: kubeconfig
+        kubeconfig: ${{ secrets.KUBE_CONFIG_PRODUCTION }}
+
+    - name: Blue-Green Deployment
+      run: |
+        # Determine current active deployment
+        CURRENT_COLOR=$(kubectl get service portfolio-engine-active -o jsonpath='{.spec.selector.color}' -n production || echo "blue")
+        NEW_COLOR=$([ "$CURRENT_COLOR" = "blue" ] && echo "green" || echo "blue")
+        
+        echo "Current color: $CURRENT_COLOR, New color: $NEW_COLOR"
+        
+        # Update image tag in deployment
+        sed -i "s|IMAGE_TAG|${{ github.event.release.tag_name }}|g" k8s/production/deployment-${NEW_COLOR}.yaml
+        
+        # Deploy new version
+        kubectl apply -f k8s/production/deployment-${NEW_COLOR}.yaml
+        
+        # Wait for new deployment to be ready
+        kubectl rollout status deployment/portfolio-engine-${NEW_COLOR} -n production --timeout=600s
+        
+        # Health check
+        kubectl wait --for=condition=ready pod -l app=portfolio-engine,color=${NEW_COLOR} -n production --timeout=300s
+
+    - name: Smoke tests
+      run: |
+        # Get service endpoint
+        ENDPOINT=$(kubectl get service portfolio-engine-${NEW_COLOR} -o jsonpath='{.status.loadBalancer.ingress[0].ip}' -n production)
+        
+        # Run smoke tests
+        python -m pytest tests/smoke/ --endpoint=https://${ENDPOINT}
+
+    - name: Switch traffic
+      run: |
+        # Switch active service to new deployment
+        kubectl patch service portfolio-engine-active -p '{"spec":{"selector":{"color":"'${NEW_COLOR}'"}}}' -n production
+        
+        # Verify traffic switch
+        sleep 30
+        python -m pytest tests/smoke/ --endpoint=https://api.portfolio-engine.com
+
+    - name: Cleanup old deployment
+      run: |
+        # Scale down old deployment
+        kubectl scale deployment portfolio-engine-${CURRENT_COLOR} --replicas=1 -n production
+        
+        # Keep old deployment for quick rollback if needed
+        echo "Old deployment scaled to 1 replica for potential rollback"
+
+    - name: Notify production deployment
+      if: always()
+      uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        channel: '#production-alerts'
+        webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+        fields: repo,message,commit,author,action,eventName,ref,workflow
+
+  performance-test:
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install k6
+      run: |
+        sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+        echo "deb https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+        sudo apt-get update
+        sudo apt-get install k6
+
+    - name: Run performance tests
+      run: |
+        k6 run tests/performance/load-test.js \
+          --env STAGING_URL=https://staging.portfolio-engine.com \
+          --out influxdb=http://monitoring.staging.com:8086/k6
+
+    - name: Upload performance results
+      uses: actions/upload-artifact@v3
+      with:
+        name: performance-test-results
+        path: performance-results.json
+
+  rollback:
+    runs-on: ubuntu-latest
+    if: failure() && github.event_name == 'release'
+    needs: [deploy-production]
+    environment: production
+
+    steps:
+    - name: Rollback production deployment
+      run: |
+        # Get previous deployment color
+        CURRENT_COLOR=$(kubectl get service portfolio-engine-active -o jsonpath='{.spec.selector.color}' -n production)
+        PREVIOUS_COLOR=$([ "$CURRENT_COLOR" = "blue" ] && echo "green" || echo "blue")
+        
+        # Switch back to previous deployment
+        kubectl patch service portfolio-engine-active -p '{"spec":{"selector":{"color":"'${PREVIOUS_COLOR}'"}}}' -n production
+        
+        # Scale up previous deployment
+        kubectl scale deployment portfolio-engine-${PREVIOUS_COLOR} --replicas=3 -n production
+
+    - name: Notify rollback
+      uses: 8398a7/action-slack@v3
+      with:
+        status: 'warning'
+        channel: '#production-alerts'
+        webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+        text: "🚨 Production deployment rolled back due to failures"
