@@ -1,5 +1,7 @@
 # End-to-End Stochastic Portfolio Engine with Regime Detection via HMM
 
+Quick Link of work - https://abhishek282001tiwari.github.io/End-to-End_Stochastic_Portfolio_Engine_with_Regime_Detection_via_HMM/results/
+
 A comprehensive portfolio optimization system that uses Hidden Markov Models (HMM) to detect market regimes and dynamically adjust portfolio allocation strategies based on detected market conditions.
 
 ## 🎯 Key Features
@@ -19,7 +21,7 @@ A comprehensive portfolio optimization system that uses Hidden Markov Models (HM
 - **Transaction Cost Modeling**: Realistic bid-ask spreads and market impact functions
 - **Regime-Aware Optimization**: Portfolio weights adjust based on detected market regimes
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Installation
 
@@ -86,7 +88,7 @@ async def run_portfolio_engine():
 asyncio.run(run_portfolio_engine())
 ```
 
-## 📊 System Architecture
+##  System Architecture
 
 ### 1. Data Infrastructure Layer (`src/data/`)
 - **Ingestion** (`ingestion/`): Multi-source data fetching with Yahoo Finance, Alpha Vantage, and custom APIs
@@ -124,7 +126,7 @@ asyncio.run(run_portfolio_engine())
 - **Hedging** (`hedging/dynamic_hedging.py`): Delta-neutral, VaR-based, and tail risk hedging
 - **Exposure** (`exposure/`): Sector, geography, and factor exposure management
 
-## 🔧 Configuration
+##  Configuration
 
 ### Main Configuration (`config/config.yaml`)
 
@@ -167,7 +169,7 @@ backtesting:
   benchmark: "SPY"
 ```
 
-## 📈 Usage Examples
+##  Usage Examples
 
 ### 1. Regime Detection and Analysis
 
@@ -279,7 +281,7 @@ print(f"Number of recommended hedges: {hedge_summary['number_of_hedges']}")
 print(f"Total hedge cost: ${hedge_summary['total_hedge_cost']:,.2f}")
 ```
 
-## 🧪 Testing
+##  Testing
 
 Run the test suite:
 
@@ -295,7 +297,7 @@ pytest tests/test_portfolio_optimizer.py
 pytest tests/ --cov=src --cov-report=html
 ```
 
-## 📊 Performance Metrics
+##  Performance Metrics
 
 The system calculates comprehensive performance metrics including:
 
@@ -325,7 +327,7 @@ The system calculates comprehensive performance metrics including:
 - Up/Down Capture Ratios
 - Correlation
 
-## 🔬 Advanced Features
+##  Advanced Features
 
 ### 1. Regime-Conditional Optimization
 The system adjusts portfolio allocation based on detected market regimes:
@@ -352,7 +354,7 @@ Realistic implementation costs including:
 - Tail risk assessment
 - Regime transition stress tests
 
-## 📝 Output Files
+##  Output Files
 
 The system generates several output files:
 
@@ -362,7 +364,7 @@ The system generates several output files:
 - `portfolio_transactions.csv`: All trading transactions
 - `logs/portfolio_engine.log`: Detailed system logs
 
-## 🤝 Contributing
+##  Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -370,22 +372,21 @@ The system generates several output files:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
+##  License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - **Hidden Markov Models**: Based on research in regime detection for financial markets
 - **Portfolio Optimization**: Implementation of modern portfolio theory and advanced optimization techniques
 - **Risk Management**: Industry best practices for institutional portfolio management
 - **Data Sources**: Yahoo Finance for market data (replace with your preferred data provider)
 
-## 📞 Support
+##  Support
 
 For questions, issues, or contributions:
 - Open an issue on GitHub
-- Contact the development team
 - Check the documentation in the `docs/` directory
 
 ---
