@@ -8,7 +8,7 @@ permalink: /contact/
 
 ## Professional Inquiries
 
-I'm always interested in discussing quantitative finance opportunities, research collaborations, and innovative portfolio management solutions.
+I welcome discussions related to optimization research, simulation-based decision systems, and interdisciplinary collaborations across industrial engineering, operations research, and applied machine learning. I’m particularly interested in academic research, open-source projects, and real-world applications of simulation-driven optimization.
 
 ### Get in Touch
 
