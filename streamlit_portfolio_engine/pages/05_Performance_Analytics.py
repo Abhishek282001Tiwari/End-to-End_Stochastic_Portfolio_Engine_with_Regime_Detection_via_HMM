@@ -33,7 +33,7 @@ from streamlit_portfolio_engine.utils import safe_rerun
 def render_performance_analytics():
     """Render the performance analytics dashboard"""
     
-    st.title("📈 Performance Analytics Dashboard")
+    st.title("Performance Analytics Dashboard")
     
     # Check if data is loaded
     if not st.session_state.get('data_loaded', False):

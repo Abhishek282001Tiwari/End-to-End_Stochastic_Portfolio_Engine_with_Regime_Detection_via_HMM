@@ -32,7 +32,7 @@ from streamlit_portfolio_engine.utils import safe_rerun
 def render_regime_detection():
     """Render the regime detection dashboard"""
     
-    st.title("🧠 Regime Detection Dashboard")
+    st.title("Regime Detection Dashboard")
     
     # Check if data is loaded
     if not st.session_state.get('data_loaded', False):
@@ -63,7 +63,7 @@ def render_regime_welcome_screen():
     """Render welcome screen for regime detection"""
     
     st.markdown("""
-    ## 🧠 Hidden Markov Model Regime Detection
+    ## Hidden Markov Model Regime Detection
     
     Advanced market regime identification using statistical Hidden Markov Models to detect:
     """)
@@ -72,7 +72,7 @@ def render_regime_welcome_screen():
     
     with col1:
         st.markdown("""
-        ### 📈 Bull Markets
+        ### Bull Markets
         - High returns
         - Low volatility
         - Strong momentum
@@ -81,7 +81,7 @@ def render_regime_welcome_screen():
     
     with col2:
         st.markdown("""
-        ### 📉 Bear Markets  
+        ### Bear Markets  
         - Negative returns
         - High volatility
         - Flight to quality
@@ -90,7 +90,7 @@ def render_regime_welcome_screen():
     
     with col3:
         st.markdown("""
-        ### 🔄 Sideways Markets
+        ### Sideways Markets
         - Range-bound returns
         - Moderate volatility
         - Mean reversion
@@ -100,7 +100,7 @@ def render_regime_welcome_screen():
     st.markdown("""
     ---
     
-    ### 🎯 Key Features
+    ### Key Features
     
     - **Real-time Regime Detection**: Live probability gauges for current market state
     - **Historical Analysis**: Color-coded timeline showing regime evolution
@@ -108,15 +108,15 @@ def render_regime_welcome_screen():
     - **Statistical Validation**: Model convergence metrics and likelihood analysis
     - **Parameter Tuning**: Interactive controls for model optimization
     
-    👈 **Load portfolio data in the sidebar to begin regime analysis!**
+    **Load portfolio data in the sidebar to begin regime analysis!**
     """)
 
 def render_regime_controls():
     """Render regime detection parameter controls"""
     
-    st.subheader("⚙️ HMM Configuration")
+    st.subheader("HMM Configuration")
     
-    with st.expander("🎛️ Model Parameters", expanded=True):
+    with st.expander("Model Parameters", expanded=True):
         col1, col2, col3, col4 = st.columns(4)
         
         with col1:
@@ -163,7 +163,7 @@ def render_regime_controls():
             st.session_state.hmm_lookback_window = lookback_window
     
     # Feature selection
-    with st.expander("📊 Feature Engineering"):
+    with st.expander("Feature Engineering"):
         col1, col2 = st.columns(2)
         
         with col1:
@@ -183,7 +183,7 @@ def render_regime_controls():
     col1, col2, col3 = st.columns([2, 1, 1])
     
     with col1:
-        if st.button("🎯 Detect Regimes", use_container_width=True, type="primary"):
+        if st.button("Detect Regimes", use_container_width=True, type="primary"):
             run_regime_detection(
                 n_regimes, covariance_type, n_iterations, lookback_window,
                 use_returns, use_volatility, use_momentum, use_volume,
@@ -191,12 +191,12 @@ def render_regime_controls():
             )
     
     with col2:
-        if st.button("🔄 Reset Model", use_container_width=True):
+        if st.button("Reset Model", use_container_width=True):
             reset_regime_model()
     
     with col3:
         if st.session_state.get('regime_model') is not None:
-            if st.button("📥 Export Results", use_container_width=True):
+            if st.button("Export Results", use_container_width=True):
                 export_regime_results()
 
 def run_regime_detection(n_regimes, covariance_type, n_iterations, lookback_window,
@@ -204,7 +204,7 @@ def run_regime_detection(n_regimes, covariance_type, n_iterations, lookback_wind
                         vol_window, mom_window, standardize):
     """Run HMM regime detection with specified parameters"""
     
-    with st.spinner("🧠 Training Hidden Markov Model..."):
+    with st.spinner("Training Hidden Markov Model..."):
         try:
             portfolio_data = st.session_state.portfolio_data
             
@@ -267,7 +267,7 @@ def run_regime_detection(n_regimes, covariance_type, n_iterations, lookback_wind
             }
             
             # Success message with model info
-            convergence_info = "✅ Converged" if hmm_model.monitor_.converged else "⚠️ Did not converge"
+            convergence_info = "Converged" if hmm_model.monitor_.converged else "Did not converge"
             final_ll = hmm_model.monitor_.history[-1] if hmm_model.monitor_.history else "N/A"
             
             st.success(f"""
@@ -394,7 +394,7 @@ def calculate_max_duration(sequence, regime):
 def render_current_regime_status():
     """Render current regime status with gauges"""
     
-    st.subheader("📊 Current Regime Status")
+    st.subheader("Current Regime Status")
     
     regime_data = st.session_state.regime_model
     current_probabilities = regime_data['probabilities'][-1]  # Latest probabilities
@@ -516,7 +516,7 @@ def render_regime_timeline():
 def render_transition_matrix():
     """Render regime transition matrix heatmap"""
     
-    st.subheader("🔄 Regime Transition Matrix")
+    st.subheader("Regime Transition Matrix")
     
     regime_data = st.session_state.regime_model
     hmm_model = regime_data['model']
@@ -700,7 +700,7 @@ def reset_regime_model():
     if 'regime_model' in st.session_state:
         del st.session_state.regime_model
     
-    st.success("🔄 Regime model reset successfully!")
+    st.success("Regime model reset successfully!")
     safe_rerun()
 
 def export_regime_results():
@@ -723,7 +723,7 @@ def export_regime_results():
     csv = export_df.to_csv()
     
     st.download_button(
-        label="📥 Download Regime Results CSV",
+        label="Download Regime Results CSV",
         data=csv,
         file_name=f"regime_analysis_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
         mime="text/csv"

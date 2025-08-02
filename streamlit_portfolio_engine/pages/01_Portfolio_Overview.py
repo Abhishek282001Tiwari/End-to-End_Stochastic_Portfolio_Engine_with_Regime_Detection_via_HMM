@@ -28,7 +28,7 @@ from src.utils.performance_analytics import PerformanceAnalytics
 def render_portfolio_overview():
     """Render the main portfolio overview page"""
     
-    st.title("📊 Portfolio Overview")
+    st.title("Portfolio Overview")
     
     # Check if data is loaded
     if not st.session_state.get('data_loaded', False):
@@ -52,7 +52,7 @@ def render_welcome_screen():
     """Render welcome screen when no data is loaded"""
     
     st.markdown("""
-    ## Welcome to the Stochastic Portfolio Engine! 🚀
+    ## Welcome to the Stochastic Portfolio Engine
     
     This advanced portfolio management system provides comprehensive tools for:
     """)
@@ -61,7 +61,7 @@ def render_welcome_screen():
     
     with col1:
         st.markdown("""
-        ### 🧠 Regime Detection
+        ### Regime Detection
         - Hidden Markov Models
         - Market state identification
         - Regime-aware optimization
@@ -70,7 +70,7 @@ def render_welcome_screen():
     
     with col2:
         st.markdown("""
-        ### ⚡ Advanced Backtesting
+        ### Advanced Backtesting
         - Realistic trading simulation
         - Multiple backtesting modes
         - Transaction cost modeling
@@ -79,7 +79,7 @@ def render_welcome_screen():
     
     with col3:
         st.markdown("""
-        ### 📊 Risk Analytics
+        ### Risk Analytics
         - Real-time risk monitoring
         - VaR and CVaR calculations
         - Stress testing
@@ -89,18 +89,18 @@ def render_welcome_screen():
     st.markdown("""
     ---
     
-    ### 🎯 Getting Started
+    ### Getting Started
     
     1. **Select Assets**: Use the sidebar to choose assets for your portfolio
     2. **Set Date Range**: Choose the analysis period
     3. **Load Data**: Click "Refresh Data" to begin analysis
     4. **Explore**: Navigate through different pages to explore features
     
-    👈 **Start by selecting assets and loading data in the sidebar!**
+    **Start by selecting assets and loading data in the sidebar!**
     """)
     
     # Quick demo charts
-    st.markdown("### 📈 Sample Analysis")
+    st.markdown("### Sample Analysis")
     
     # Generate sample data for demo
     dates = pd.date_range(start='2023-01-01', end='2024-01-01', freq='D')
@@ -139,7 +139,7 @@ def render_welcome_screen():
 def render_portfolio_metrics(portfolio_data):
     """Render key portfolio metrics"""
     
-    st.subheader("📊 Portfolio Metrics")
+    st.subheader("Portfolio Metrics")
     
     # Extract price data
     if 'Close' in portfolio_data.columns.get_level_values(0):
@@ -213,7 +213,7 @@ def render_portfolio_metrics(portfolio_data):
         )
     
     # Additional metrics in expandable section
-    with st.expander("📈 Additional Metrics"):
+    with st.expander("Additional Metrics"):
         col1, col2, col3, col4 = st.columns(4)
         
         with col1:
@@ -249,7 +249,7 @@ def render_portfolio_charts(portfolio_data):
     col1, col2 = st.columns(2)
     
     with col1:
-        st.subheader("📈 Cumulative Performance")
+        st.subheader("Cumulative Performance")
         
         fig = go.Figure()
         
@@ -272,7 +272,7 @@ def render_portfolio_charts(portfolio_data):
         st.plotly_chart(fig, use_container_width=True)
     
     with col2:
-        st.subheader("🥧 Current Allocation")
+        st.subheader("Current Allocation")
         
         # Equal weight allocation for demo
         symbols = st.session_state.get('selected_symbols', [])
@@ -293,7 +293,7 @@ def render_portfolio_charts(portfolio_data):
             st.info("No assets selected for allocation display.")
     
     # Drawdown chart
-    st.subheader("📉 Drawdown Analysis")
+    st.subheader("Drawdown Analysis")
     
     rolling_max = cumulative_returns.expanding().max()
     drawdown = (cumulative_returns / rolling_max - 1) * 100  # Convert to percentage
@@ -325,7 +325,7 @@ def render_portfolio_charts(portfolio_data):
 def render_asset_analysis(portfolio_data):
     """Render individual asset analysis"""
     
-    st.subheader("📊 Asset Analysis")
+    st.subheader("Asset Analysis")
     
     # Extract price data
     if 'Close' in portfolio_data.columns.get_level_values(0):
@@ -334,7 +334,7 @@ def render_asset_analysis(portfolio_data):
         close_prices = portfolio_data
     
     # Tabs for different views
-    tab1, tab2, tab3 = st.tabs(["📈 Price Charts", "📊 Returns Analysis", "🔄 Correlation Matrix"])
+    tab1, tab2, tab3 = st.tabs(["Price Charts", "Returns Analysis", "Correlation Matrix"])
     
     with tab1:
         # Normalize prices to 100 for comparison

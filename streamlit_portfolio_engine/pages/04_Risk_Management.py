@@ -32,7 +32,7 @@ from src.risk.metrics.risk_analytics import RiskAnalytics
 def render_risk_management():
     """Render the risk management dashboard"""
     
-    st.title("⚠️ Risk Management Dashboard")
+    st.title("Risk Management Dashboard")
     
     # Check if data is loaded
     if not st.session_state.get('data_loaded', False):

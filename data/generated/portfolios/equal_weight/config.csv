@@ -1,0 +1,2 @@
+name,risk_target,return_target,equal_weights,max_weight,min_weight,turnover_target,rebalance_frequency,constraints
+Equal Weight,,,True,,,0.1,RebalanceFrequency.QUARTERLY,{}

@@ -1,0 +1,2 @@
+name,risk_target,equal_risk_contribution,max_weight,min_weight,turnover_target,rebalance_frequency,constraints
+Risk Parity,0.15,True,0.2,0.02,0.3,RebalanceFrequency.QUARTERLY,"{'sector_max': 0.35, 'leverage_max': 1.0}"

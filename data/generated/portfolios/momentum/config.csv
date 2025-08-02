@@ -1,0 +1,2 @@
+name,lookback_period,risk_target,max_weight,min_weight,turnover_target,rebalance_frequency,constraints
+Momentum Strategy,126,0.15,0.15,0.0,1.2,RebalanceFrequency.MONTHLY,"{'top_n_assets': 20, 'momentum_threshold': 0.05}"

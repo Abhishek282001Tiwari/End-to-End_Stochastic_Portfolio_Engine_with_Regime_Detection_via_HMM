@@ -33,7 +33,7 @@ from streamlit_portfolio_engine.utils import safe_rerun
 def render_monte_carlo():
     """Render the Monte Carlo simulations dashboard"""
     
-    st.title("🎲 Monte Carlo Simulations Dashboard")
+    st.title("Monte Carlo Simulations Dashboard")
     
     # Check if data is loaded
     if not st.session_state.get('data_loaded', False):

@@ -1,0 +1,92 @@
+# Data Quality Validation Report
+
+Generated on: 2025-08-02 01:33:34
+Overall Score: 0.92/1.00
+
+## Summary Statistics
+- total_assets: 5
+- asset_types: {'Equities': 5}
+- date_range: {'start_date': '2015-01-01', 'end_date': '2024-01-01', 'total_days': 3287}
+- data_quality_metrics: {'missing_data_pct': np.float64(0.0), 'total_records': 98640}
+
+## Validation Results
+Passed: 71/74 tests
+
+✓ PASS data_structure_AAPL: Data structure validation for AAPL: PASSED (Score: 1.00)
+✓ PASS price_positivity_AAPL: Price positivity for AAPL: 0 negative prices (Score: 1.00)
+✓ PASS price_continuity_AAPL: Price continuity for AAPL: 0 extreme moves (Score: 1.00)
+✓ PASS price_trend_realism_AAPL: Price trend realism for AAPL: 50.3% same direction (Score: 1.00)
+✓ PASS volume_data_AAPL: Volume validation for AAPL: PASSED (Score: 1.00)
+✓ PASS ohlc_consistency_AAPL: OHLC consistency for AAPL: PASSED (Score: 1.00)
+✓ PASS return_mean_AAPL: Return mean for AAPL: 2.5% annual (Score: 0.97)
+✓ PASS return_volatility_AAPL: Return volatility for AAPL: 49.3% annual (Score: 1.00)
+✓ PASS return_skewness_AAPL: Return skewness for AAPL: 0.25 (Score: 0.95)
+✓ PASS return_kurtosis_AAPL: Return kurtosis for AAPL: 3.01 (Score: 1.00)
+✓ PASS return_non_normality_AAPL: Return non-normality for AAPL: p-value 0.0000 (Score: 1.00)
+✓ PASS autocorrelation_AAPL: Autocorrelation lag-1 for AAPL: -0.019 (Score: 0.96)
+✓ PASS volatility_clustering_AAPL: Volatility clustering for AAPL: 0.159 (Score: 0.80)
+✓ PASS stationarity_AAPL: Stationarity proxy for AAPL: variance ratio 0.810 (Score: 1.00)
+✓ PASS data_structure_MSFT: Data structure validation for MSFT: PASSED (Score: 1.00)
+✓ PASS price_positivity_MSFT: Price positivity for MSFT: 0 negative prices (Score: 1.00)
+✓ PASS price_continuity_MSFT: Price continuity for MSFT: 0 extreme moves (Score: 1.00)
+✓ PASS price_trend_realism_MSFT: Price trend realism for MSFT: 51.4% same direction (Score: 1.00)
+✓ PASS volume_data_MSFT: Volume validation for MSFT: PASSED (Score: 1.00)
+✓ PASS ohlc_consistency_MSFT: OHLC consistency for MSFT: PASSED (Score: 1.00)
+✓ PASS return_mean_MSFT: Return mean for MSFT: 24.0% annual (Score: 0.76)
+✓ PASS return_volatility_MSFT: Return volatility for MSFT: 44.7% annual (Score: 1.00)
+✓ PASS return_skewness_MSFT: Return skewness for MSFT: 0.09 (Score: 0.98)
+✓ PASS return_kurtosis_MSFT: Return kurtosis for MSFT: 3.27 (Score: 1.00)
+✓ PASS return_non_normality_MSFT: Return non-normality for MSFT: p-value 0.0000 (Score: 1.00)
+✓ PASS autocorrelation_MSFT: Autocorrelation lag-1 for MSFT: 0.006 (Score: 0.99)
+✓ PASS volatility_clustering_MSFT: Volatility clustering for MSFT: 0.113 (Score: 0.56)
+✓ PASS stationarity_MSFT: Stationarity proxy for MSFT: variance ratio 0.957 (Score: 1.00)
+✓ PASS data_structure_GOOGL: Data structure validation for GOOGL: PASSED (Score: 1.00)
+✓ PASS price_positivity_GOOGL: Price positivity for GOOGL: 0 negative prices (Score: 1.00)
+✓ PASS price_continuity_GOOGL: Price continuity for GOOGL: 0 extreme moves (Score: 1.00)
+✓ PASS price_trend_realism_GOOGL: Price trend realism for GOOGL: 51.6% same direction (Score: 1.00)
+✓ PASS volume_data_GOOGL: Volume validation for GOOGL: PASSED (Score: 1.00)
+✓ PASS ohlc_consistency_GOOGL: OHLC consistency for GOOGL: PASSED (Score: 0.99)
+✓ PASS return_mean_GOOGL: Return mean for GOOGL: 34.7% annual (Score: 0.65)
+✓ PASS return_volatility_GOOGL: Return volatility for GOOGL: 58.8% annual (Score: 1.00)
+✓ PASS return_skewness_GOOGL: Return skewness for GOOGL: 0.66 (Score: 0.87)
+✓ PASS return_kurtosis_GOOGL: Return kurtosis for GOOGL: 6.18 (Score: 1.00)
+✓ PASS return_non_normality_GOOGL: Return non-normality for GOOGL: p-value 0.0000 (Score: 1.00)
+✓ PASS autocorrelation_GOOGL: Autocorrelation lag-1 for GOOGL: -0.025 (Score: 0.95)
+✓ PASS volatility_clustering_GOOGL: Volatility clustering for GOOGL: 0.074 (Score: 0.37)
+✓ PASS stationarity_GOOGL: Stationarity proxy for GOOGL: variance ratio 0.873 (Score: 1.00)
+✓ PASS data_structure_AMZN: Data structure validation for AMZN: PASSED (Score: 1.00)
+✓ PASS price_positivity_AMZN: Price positivity for AMZN: 0 negative prices (Score: 1.00)
+✓ PASS price_continuity_AMZN: Price continuity for AMZN: 0 extreme moves (Score: 1.00)
+✓ PASS price_trend_realism_AMZN: Price trend realism for AMZN: 51.9% same direction (Score: 1.00)
+✓ PASS volume_data_AMZN: Volume validation for AMZN: PASSED (Score: 1.00)
+✓ PASS ohlc_consistency_AMZN: OHLC consistency for AMZN: PASSED (Score: 0.98)
+✓ PASS return_mean_AMZN: Return mean for AMZN: 31.9% annual (Score: 0.68)
+✓ PASS return_volatility_AMZN: Return volatility for AMZN: 68.7% annual (Score: 1.00)
+✓ PASS return_skewness_AMZN: Return skewness for AMZN: 0.30 (Score: 0.94)
+✓ PASS return_kurtosis_AMZN: Return kurtosis for AMZN: 3.86 (Score: 1.00)
+✓ PASS return_non_normality_AMZN: Return non-normality for AMZN: p-value 0.0000 (Score: 1.00)
+✓ PASS autocorrelation_AMZN: Autocorrelation lag-1 for AMZN: -0.024 (Score: 0.95)
+✓ PASS volatility_clustering_AMZN: Volatility clustering for AMZN: 0.069 (Score: 0.35)
+✓ PASS stationarity_AMZN: Stationarity proxy for AMZN: variance ratio 0.951 (Score: 1.00)
+✓ PASS data_structure_TSLA: Data structure validation for TSLA: PASSED (Score: 1.00)
+✓ PASS price_positivity_TSLA: Price positivity for TSLA: 0 negative prices (Score: 1.00)
+✓ PASS price_continuity_TSLA: Price continuity for TSLA: 2 extreme moves (Score: 1.00)
+✓ PASS price_trend_realism_TSLA: Price trend realism for TSLA: 51.6% same direction (Score: 1.00)
+✓ PASS volume_data_TSLA: Volume validation for TSLA: PASSED (Score: 1.00)
+✗ FAIL ohlc_consistency_TSLA: OHLC consistency for TSLA: 11 issues found (Score: 0.90)
+✗ FAIL return_mean_TSLA: Return mean for TSLA: 106.3% annual (Score: 0.00)
+✗ FAIL return_volatility_TSLA: Return volatility for TSLA: 107.0% annual (Score: 0.50)
+✓ PASS return_skewness_TSLA: Return skewness for TSLA: 0.68 (Score: 0.86)
+✓ PASS return_kurtosis_TSLA: Return kurtosis for TSLA: 5.54 (Score: 1.00)
+✓ PASS return_non_normality_TSLA: Return non-normality for TSLA: p-value 0.0000 (Score: 1.00)
+✓ PASS autocorrelation_TSLA: Autocorrelation lag-1 for TSLA: -0.024 (Score: 0.95)
+✓ PASS volatility_clustering_TSLA: Volatility clustering for TSLA: 0.069 (Score: 0.35)
+✓ PASS stationarity_TSLA: Stationarity proxy for TSLA: variance ratio 0.755 (Score: 1.00)
+✓ PASS perfect_correlations: Perfect correlations found: 0 (Score: 1.00)
+✓ PASS correlation_distribution: Average absolute correlation: 0.499 (Score: 1.00)
+✓ PASS asset_count: Valid assets in portfolio: 5 (Score: 0.50)
+✓ PASS data_coverage: Data overlap period: 3287 days (Score: 1.00)
+
+## Recommendations
+1. Adjust return distribution parameters to match realistic market behavior
+2. Fix OHLC consistency issues in data generation

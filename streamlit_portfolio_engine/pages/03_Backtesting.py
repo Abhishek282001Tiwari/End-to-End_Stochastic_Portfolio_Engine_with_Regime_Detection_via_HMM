@@ -32,7 +32,7 @@ from streamlit_portfolio_engine.utils import safe_rerun
 def render_backtesting():
     """Render the backtesting interface"""
     
-    st.title("⚡ Advanced Backtesting Framework")
+    st.title("Advanced Backtesting Framework")
     
     # Check if data is loaded
     if not st.session_state.get('data_loaded', False):
@@ -58,7 +58,7 @@ def render_backtesting_welcome_screen():
     """Render welcome screen for backtesting"""
     
     st.markdown("""
-    ## ⚡ Advanced Backtesting Framework
+    ## Advanced Backtesting Framework
     
     Comprehensive backtesting system with realistic trading simulation and multiple analysis modes.
     """)
@@ -67,7 +67,7 @@ def render_backtesting_welcome_screen():
     
     with col1:
         st.markdown("""
-        ### 📊 Vectorized
+        ### Vectorized
         - Fast matrix operations
         - Ideal for initial testing
         - Simple rebalancing
@@ -76,7 +76,7 @@ def render_backtesting_welcome_screen():
     
     with col2:
         st.markdown("""
-        ### 🎯 Event-driven
+        ### Event-driven
         - Realistic order execution
         - Market microstructure
         - Transaction costs
@@ -85,7 +85,7 @@ def render_backtesting_welcome_screen():
     
     with col3:
         st.markdown("""
-        ### 🔄 Walk-forward
+        ### Walk-forward
         - Out-of-sample testing
         - Rolling optimization
         - Parameter stability
@@ -94,7 +94,7 @@ def render_backtesting_welcome_screen():
     
     with col4:
         st.markdown("""
-        ### 🎲 Monte Carlo
+        ### Monte Carlo
         - Statistical robustness
         - Multiple scenarios
         - Confidence intervals
@@ -104,7 +104,7 @@ def render_backtesting_welcome_screen():
     st.markdown("""
     ---
     
-    ### 🎯 Key Features
+    ### Key Features
     
     - **Realistic Trading Costs**: Commission, bid-ask spreads, market impact, and slippage
     - **Multiple Strategies**: Mean variance, risk parity, Black-Litterman, and custom strategies
@@ -113,16 +113,16 @@ def render_backtesting_welcome_screen():
     - **Risk Analytics**: VaR, CVaR, maximum drawdown, and tail risk measures
     - **Benchmarking**: Compare against standard indices and custom benchmarks
     
-    👈 **Load portfolio data in the sidebar to begin backtesting!**
+    **Load portfolio data in the sidebar to begin backtesting!**
     """)
 
 def render_backtest_configuration():
     """Render backtesting configuration panel"""
     
-    st.subheader("⚙️ Backtest Configuration")
+    st.subheader("Backtest Configuration")
     
     # Main configuration
-    with st.expander("🎛️ Core Settings", expanded=True):
+    with st.expander("Core Settings", expanded=True):
         col1, col2, col3, col4 = st.columns(4)
         
         with col1:
@@ -162,7 +162,7 @@ def render_backtest_configuration():
             st.session_state.rebalance_frequency = rebalance_frequency
     
     # Trading costs and constraints
-    with st.expander("💰 Trading Costs & Constraints"):
+    with st.expander("Trading Costs & Constraints"):
         col1, col2 = st.columns(2)
         
         with col1:
@@ -233,7 +233,7 @@ def render_backtest_configuration():
     
     # Mode-specific configurations
     if backtest_mode == "Walk-forward":
-        with st.expander("🔄 Walk-forward Settings"):
+        with st.expander("Walk-forward Settings"):
             col1, col2, col3 = st.columns(3)
             
             with col1:
@@ -267,7 +267,7 @@ def render_backtest_configuration():
                 st.session_state.step_size = step_size
     
     elif backtest_mode == "Monte Carlo":
-        with st.expander("🎲 Monte Carlo Settings"):
+        with st.expander("Monte Carlo Settings"):
             col1, col2, col3 = st.columns(3)
             
             with col1:
@@ -300,7 +300,7 @@ def render_backtest_configuration():
                 st.session_state.scenario_type = scenario_type
     
     # Risk management settings
-    with st.expander("⚠️ Risk Management"):
+    with st.expander("Risk Management"):
         col1, col2 = st.columns(2)
         
         with col1:
@@ -342,25 +342,25 @@ def render_backtest_configuration():
 def render_backtest_execution():
     """Render backtest execution controls"""
     
-    st.subheader("🚀 Execution")
+    st.subheader("Execution")
     
     col1, col2, col3, col4 = st.columns([3, 1, 1, 1])
     
     with col1:
-        if st.button("🚀 Run Backtest", use_container_width=True, type="primary"):
+        if st.button("Run Backtest", use_container_width=True, type="primary"):
             run_backtest()
     
     with col2:
-        if st.button("⚡ Quick Test", use_container_width=True):
+        if st.button("Quick Test", use_container_width=True):
             run_quick_backtest()
     
     with col3:
-        if st.button("🔄 Reset", use_container_width=True):
+        if st.button("Reset", use_container_width=True):
             reset_backtest_results()
     
     with col4:
         if st.session_state.get('backtest_results') is not None:
-            if st.button("📥 Export", use_container_width=True):
+            if st.button("Export", use_container_width=True):
                 export_backtest_results()
 
 def run_backtest():
@@ -368,7 +368,7 @@ def run_backtest():
     
     mode = st.session_state.backtest_mode
     
-    with st.spinner(f"🚀 Running {mode} Backtest..."):
+    with st.spinner(f"Running {mode} Backtest..."):
         try:
             portfolio_data = st.session_state.portfolio_data
             
@@ -642,7 +642,7 @@ def run_monte_carlo_backtest(close_prices):
 def run_quick_backtest():
     """Run a quick backtest with default parameters"""
     
-    with st.spinner("⚡ Running Quick Backtest..."):
+    with st.spinner("Running Quick Backtest..."):
         try:
             portfolio_data = st.session_state.portfolio_data
             
@@ -672,7 +672,7 @@ def run_quick_backtest():
             
             st.session_state.backtest_results = results
             
-            st.success(f"⚡ Quick test complete! Return: {metrics['total_return']:.2%}")
+            st.success(f"Quick test complete! Return: {metrics['total_return']:.2%}")
             
         except Exception as e:
             st.error(f"❌ Quick test failed: {str(e)}")
@@ -813,7 +813,7 @@ def render_performance_charts(results):
     col1, col2 = st.columns(2)
     
     with col1:
-        st.subheader("💰 Portfolio Value")
+        st.subheader("Portfolio Value")
         
         fig = go.Figure()
         
@@ -920,7 +920,7 @@ def render_performance_charts(results):
 def render_detailed_analysis(results):
     """Render detailed backtest analysis"""
     
-    tab1, tab2, tab3 = st.tabs(["📈 Performance", "💰 Costs", "⚙️ Configuration"])
+    tab1, tab2, tab3 = st.tabs(["Performance", "Costs", "Configuration"])
     
     with tab1:
         st.subheader("Performance Breakdown")
@@ -1009,7 +1009,7 @@ def reset_backtest_results():
     if 'backtest_results' in st.session_state:
         del st.session_state.backtest_results
     
-    st.success("🔄 Backtest results cleared!")
+    st.success("Backtest results cleared!")
     safe_rerun()
 
 def export_backtest_results():
@@ -1035,7 +1035,7 @@ def export_backtest_results():
     csv = export_df.to_csv(index=False)
     
     st.download_button(
-        label="📥 Download Backtest Results CSV",
+        label="Download Backtest Results CSV",
         data=csv,
         file_name=f"backtest_{results['mode'].lower()}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
         mime="text/csv"

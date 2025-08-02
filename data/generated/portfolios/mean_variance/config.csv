@@ -1,0 +1,2 @@
+name,risk_target,return_target,max_weight,min_weight,turnover_target,rebalance_frequency,constraints
+Mean Variance Optimization,0.15,0.08,0.25,0.01,0.5,RebalanceFrequency.MONTHLY,"{'sector_max': 0.4, 'single_stock_max': 0.1, 'cash_min': 0.02}"

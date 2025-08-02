@@ -92,53 +92,208 @@ st.set_page_config(
     }
 )
 
-# Custom CSS
+# Custom CSS for minimalist professional design
 st.markdown("""
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cambria:wght@400;600;700&display=swap');
+    
+    /* Global font family override */
+    html, body, [class*="css"] {
+        font-family: 'Cambria', serif !important;
+    }
+    
+    /* Main header styling */
     .main-header {
-        font-size: 2.5rem;
-        font-weight: bold;
-        color: #1f77b4;
+        font-family: 'Cambria', serif !important;
+        font-size: 2.2rem;
+        font-weight: 600;
+        color: #2c2c2c;
         text-align: center;
         margin-bottom: 2rem;
+        letter-spacing: -0.5px;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 1rem;
     }
     
+    /* Remove Streamlit branding and decorative elements */
+    .stDeployButton {
+        display: none;
+    }
+    
+    header[data-testid="stHeader"] {
+        background: none !important;
+        height: 0 !important;
+    }
+    
+    .stDecoration {
+        display: none !important;
+    }
+    
+    /* Clean metric cards */
     .metric-card {
-        background-color: #f8f9fa;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        border-left: 4px solid #1f77b4;
+        background-color: #ffffff;
+        padding: 1.5rem;
+        border: 1px solid #e8e8e8;
         margin: 0.5rem 0;
+        font-family: 'Cambria', serif !important;
     }
     
-    .success-card {
-        background-color: #d4edda;
-        border-left-color: #28a745;
+    /* Sidebar styling */
+    .css-1d391kg {
+        background-color: #fafafa;
+        border-right: 1px solid #e0e0e0;
     }
     
-    .warning-card {
-        background-color: #fff3cd;
-        border-left-color: #ffc107;
+    /* Button styling */
+    .stButton > button {
+        background-color: #ffffff;
+        color: #2c2c2c;
+        border: 1px solid #d0d0d0;
+        font-family: 'Cambria', serif !important;
+        font-weight: 500;
+        border-radius: 2px;
+        padding: 0.5rem 1rem;
+        transition: all 0.2s ease;
     }
     
-    .danger-card {
-        background-color: #f8d7da;
-        border-left-color: #dc3545;
+    .stButton > button:hover {
+        background-color: #f5f5f5;
+        border-color: #a0a0a0;
     }
     
-    .sidebar-logo {
-        display: block;
-        margin: 0 auto 2rem auto;
-        max-width: 200px;
+    /* Primary button styling */
+    .stButton > button[kind="primary"] {
+        background-color: #2c2c2c;
+        color: #ffffff;
+        border: 1px solid #2c2c2c;
     }
     
-    .feature-highlight {
-        background: linear-gradient(90deg, #1f77b4, #17a2b8);
-        color: white;
+    .stButton > button[kind="primary"]:hover {
+        background-color: #404040;
+        border-color: #404040;
+    }
+    
+    /* Clean selectbox and input styling */
+    .stSelectbox > div > div {
+        background-color: #ffffff;
+        border: 1px solid #d0d0d0;
+        border-radius: 2px;
+        font-family: 'Cambria', serif !important;
+    }
+    
+    .stNumberInput > div > div > input {
+        background-color: #ffffff;
+        border: 1px solid #d0d0d0;
+        border-radius: 2px;
+        font-family: 'Cambria', serif !important;
+    }
+    
+    /* Clean tabs */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 0;
+        background-color: #ffffff;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        background-color: #ffffff;
+        color: #2c2c2c;
+        font-family: 'Cambria', serif !important;
+        font-weight: 500;
+        border: none;
+        border-bottom: 2px solid transparent;
+        padding: 1rem 1.5rem;
+    }
+    
+    .stTabs [aria-selected="true"] {
+        background-color: #ffffff;
+        color: #2c2c2c;
+        border-bottom: 2px solid #2c2c2c;
+    }
+    
+    /* Clean expander */
+    .streamlit-expanderHeader {
+        background-color: #ffffff;
+        color: #2c2c2c;
+        font-family: 'Cambria', serif !important;
+        font-weight: 600;
+        border: 1px solid #e0e0e0;
+        border-radius: 2px;
+    }
+    
+    /* Metrics styling */
+    [data-testid="metric-container"] {
+        background-color: #ffffff;
+        border: 1px solid #e8e8e8;
         padding: 1rem;
-        border-radius: 0.5rem;
-        text-align: center;
-        margin: 1rem 0;
+        border-radius: 2px;
+    }
+    
+    [data-testid="metric-container"] > div {
+        color: #2c2c2c;
+        font-family: 'Cambria', serif !important;
+    }
+    
+    /* Clean dataframe styling */
+    .stDataFrame {
+        font-family: 'Cambria', serif !important;
+    }
+    
+    /* Remove colorful elements */
+    .stAlert {
+        background-color: #f8f9fa;
+        color: #2c2c2c;
+        border: 1px solid #e0e0e0;
+        font-family: 'Cambria', serif !important;
+    }
+    
+    .stSuccess {
+        background-color: #f8f9fa;
+        color: #2c2c2c;
+        border-left: 3px solid #6c757d;
+    }
+    
+    .stWarning {
+        background-color: #f8f9fa;
+        color: #2c2c2c;
+        border-left: 3px solid #6c757d;
+    }
+    
+    .stError {
+        background-color: #f8f9fa;
+        color: #2c2c2c;
+        border-left: 3px solid #6c757d;
+    }
+    
+    .stInfo {
+        background-color: #f8f9fa;
+        color: #2c2c2c;
+        border-left: 3px solid #6c757d;
+    }
+    
+    /* Chart container styling */
+    .js-plotly-plot {
+        background-color: #ffffff !important;
+    }
+    
+    /* Clean markdown styling */
+    .stMarkdown {
+        font-family: 'Cambria', serif !important;
+        color: #2c2c2c;
+    }
+    
+    /* Hide hamburger menu */
+    .css-14xtw13.e8zbici0 {
+        display: none;
+    }
+    
+    /* Clean slider styling */
+    .stSlider > div > div {
+        background-color: #ffffff;
+    }
+    
+    .stSlider [role="slider"] {
+        background-color: #2c2c2c;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -206,7 +361,7 @@ class PortfolioEngineApp:
         """Main application entry point"""
         
         # App header
-        st.markdown('<h1 class="main-header">📊 Stochastic Portfolio Engine</h1>', unsafe_allow_html=True)
+        st.markdown('<h1 class="main-header">Stochastic Portfolio Engine</h1>', unsafe_allow_html=True)
         
         # Sidebar navigation
         self._render_sidebar()
@@ -234,7 +389,7 @@ class PortfolioEngineApp:
         
         with st.sidebar:
             # Logo/Title
-            st.markdown("## 🎯 Navigation")
+            st.markdown("## Navigation")
             
             # Page selection
             pages = [
@@ -260,7 +415,7 @@ class PortfolioEngineApp:
             st.markdown("---")
             
             # Global settings
-            st.markdown("## ⚙️ Global Settings")
+            st.markdown("## Global Settings")
             
             # Asset selection
             available_symbols = [
@@ -297,13 +452,13 @@ class PortfolioEngineApp:
                 )
             
             # Data refresh
-            if st.button("🔄 Refresh Data", use_container_width=True):
+            if st.button("Refresh Data", use_container_width=True):
                 self._load_portfolio_data(start_date, end_date)
             
             st.markdown("---")
             
             # System status
-            st.markdown("## 📊 System Status")
+            st.markdown("## System Status")
             
             status_col1, status_col2 = st.columns(2)
             
@@ -331,7 +486,6 @@ class PortfolioEngineApp:
                     st.metric("Portfolio Value", f"${latest_value:.2f}", f"{daily_change:.2%}")
                     st.metric("Assets", len(st.session_state.selected_symbols))
     
-    @safe_cache_data
     def _load_portfolio_data(self, start_date: datetime, end_date: datetime):
         """Load portfolio data from data sources"""
         
@@ -363,29 +517,29 @@ class PortfolioEngineApp:
                 st.session_state.data_loaded = True
                 st.session_state.last_update = datetime.now()
                 
-                st.success(f"✅ Data loaded for {len(st.session_state.selected_symbols)} assets")
+                st.success(f"Data loaded for {len(st.session_state.selected_symbols)} assets")
                 
             except Exception as e:
-                st.error(f"❌ Error loading data: {str(e)}")
+                st.error(f"Error loading data: {str(e)}")
                 self.logger.error(f"Data loading error: {e}")
     
     def _render_portfolio_overview(self):
         """Render portfolio overview dashboard"""
         
-        st.header("📊 Portfolio Overview")
+        st.header("Portfolio Overview")
         
         if not st.session_state.data_loaded:
-            st.info("👆 Please load data using the sidebar controls to view portfolio overview.")
+            st.info("Please load data using the sidebar controls to view portfolio overview.")
             
             # Show demo content
-            st.markdown("## 🎯 Portfolio Engine Features")
+            st.markdown("## Portfolio Engine Features")
             
             col1, col2, col3 = st.columns(3)
             
             with col1:
                 st.markdown("""
                 <div class="feature-highlight">
-                    <h4>🧠 HMM Regime Detection</h4>
+                    <h4>HMM Regime Detection</h4>
                     <p>Advanced market regime identification using Hidden Markov Models</p>
                 </div>
                 """, unsafe_allow_html=True)
@@ -393,7 +547,7 @@ class PortfolioEngineApp:
             with col2:
                 st.markdown("""
                 <div class="feature-highlight">
-                    <h4>⚡ Realistic Backtesting</h4>
+                    <h4>Realistic Backtesting</h4>
                     <p>Event-driven backtesting with realistic trading costs and slippage</p>
                 </div>
                 """, unsafe_allow_html=True)
@@ -401,7 +555,7 @@ class PortfolioEngineApp:
             with col3:
                 st.markdown("""
                 <div class="feature-highlight">
-                    <h4>🎲 Monte Carlo Analysis</h4>
+                    <h4>Monte Carlo Analysis</h4>
                     <p>Statistical robustness testing with thousands of simulations</p>
                 </div>
                 """, unsafe_allow_html=True)
@@ -511,10 +665,10 @@ class PortfolioEngineApp:
     def _render_regime_detection(self):
         """Render regime detection dashboard"""
         
-        st.header("🧠 Regime Detection Analysis")
+        st.header("Regime Detection Analysis")
         
         if not st.session_state.data_loaded:
-            st.info("👆 Please load data using the sidebar controls to perform regime analysis.")
+            st.info("Please load data using the sidebar controls to perform regime analysis.")
             return
         
         # Regime detection controls
@@ -527,7 +681,7 @@ class PortfolioEngineApp:
             covariance_type = st.selectbox("Covariance Type", ["full", "diag", "spherical", "tied"])
         
         with col3:
-            if st.button("🎯 Detect Regimes"):
+            if st.button("Detect Regimes"):
                 self._run_regime_detection(n_regimes, covariance_type)
         
         # Display results if available
@@ -580,7 +734,7 @@ class PortfolioEngineApp:
                     'n_regimes': n_regimes
                 }
                 
-                st.success("✅ Regime detection completed successfully!")
+                st.success("Regime detection completed successfully!")
                 
             except Exception as e:
                 st.error(f"❌ Error in regime detection: {str(e)}")
@@ -668,10 +822,10 @@ class PortfolioEngineApp:
     def _render_backtesting(self):
         """Render backtesting interface"""
         
-        st.header("⚡ Advanced Backtesting")
+        st.header("Advanced Backtesting")
         
         if not st.session_state.data_loaded:
-            st.info("👆 Please load data using the sidebar controls to run backtests.")
+            st.info("Please load data using the sidebar controls to run backtests.")
             return
         
         # Backtesting parameters
@@ -769,7 +923,7 @@ class PortfolioEngineApp:
                     }
                 }
                 
-                st.success(f"✅ {mode} backtest completed successfully!")
+                st.success(f"{mode} backtest completed successfully!")
                 
             except Exception as e:
                 st.error(f"❌ Backtest error: {str(e)}")
@@ -822,7 +976,7 @@ class PortfolioEngineApp:
         st.plotly_chart(fig, use_container_width=True)
         
         # Download results
-        if st.button("📥 Download Results"):
+        if st.button("Download Results"):
             # Create downloadable data
             results_df = pd.DataFrame({
                 'Date': cumulative_returns.index,
@@ -841,43 +995,43 @@ class PortfolioEngineApp:
     def _render_risk_management(self):
         """Render risk management dashboard"""
         
-        st.header("⚠️ Risk Management Dashboard")
+        st.header("Risk Management Dashboard")
         
         if not st.session_state.data_loaded:
-            st.info("👆 Please load data using the sidebar controls to view risk metrics.")
+            st.info("Please load data using the sidebar controls to view risk metrics.")
             return
         
-        st.info("🚧 Risk Management Dashboard - Coming Soon!")
+        st.info("Risk Management Dashboard - Coming Soon!")
         st.markdown("This will include VaR, CVaR, exposure analysis, and risk limit monitoring.")
     
     def _render_performance_analytics(self):
         """Render performance analytics page"""
         
-        st.header("📈 Performance Analytics")
+        st.header("Performance Analytics")
         
         if not st.session_state.data_loaded:
-            st.info("👆 Please load data using the sidebar controls to view performance analytics.")
+            st.info("Please load data using the sidebar controls to view performance analytics.")
             return
         
-        st.info("🚧 Performance Analytics - Coming Soon!")
+        st.info("Performance Analytics - Coming Soon!")
         st.markdown("This will include factor attribution, benchmark comparison, and statistical analysis.")
     
     def _render_monte_carlo(self):
         """Render Monte Carlo simulations page"""
         
-        st.header("🎲 Monte Carlo Simulations")
+        st.header("Monte Carlo Simulations")
         
         if not st.session_state.data_loaded:
-            st.info("👆 Please load data using the sidebar controls to run Monte Carlo analysis.")
+            st.info("Please load data using the sidebar controls to run Monte Carlo analysis.")
             return
         
-        st.info("🚧 Monte Carlo Simulations - Coming Soon!")
+        st.info("Monte Carlo Simulations - Coming Soon!")
         st.markdown("This will include portfolio simulation, scenario analysis, and confidence intervals.")
     
     def _render_settings(self):
         """Render settings and configuration page"""
         
-        st.header("⚙️ Settings & Configuration")
+        st.header("Settings & Configuration")
         
         # App configuration
         st.subheader("Application Settings")
@@ -899,7 +1053,7 @@ class PortfolioEngineApp:
         st.text_input("Polygon.io API Key", type="password", help="Enter your Polygon.io API key")
         
         # Save settings
-        if st.button("💾 Save Settings"):
+        if st.button("Save Settings"):
             st.success("Settings saved successfully!")
 
 

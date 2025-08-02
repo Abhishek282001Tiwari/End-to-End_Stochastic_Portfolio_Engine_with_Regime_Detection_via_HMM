@@ -1,0 +1,10 @@
+{
+  "overall_score": 0.9158846935195225,
+  "total_tests": 74,
+  "passed_tests": 71,
+  "timestamp": "2025-08-02T01:33:34.675863",
+  "recommendations": [
+    "Adjust return distribution parameters to match realistic market behavior",
+    "Fix OHLC consistency issues in data generation"
+  ]
+}

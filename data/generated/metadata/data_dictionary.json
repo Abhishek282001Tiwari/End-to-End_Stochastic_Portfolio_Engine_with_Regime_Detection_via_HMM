@@ -1,0 +1,25 @@
+{
+  "OHLCV_columns": {
+    "Date": "Trading date (YYYY-MM-DD)",
+    "Open": "Opening price",
+    "High": "Highest price during trading session",
+    "Low": "Lowest price during trading session",
+    "Close": "Closing price",
+    "Volume": "Trading volume (shares/units)",
+    "Adj_Close": "Dividend/split adjusted closing price"
+  },
+  "regime_columns": {
+    "returns": "Daily return",
+    "regime": "Regime label (text)",
+    "regime_code": "Regime code (0-6)",
+    "confidence": "Regime identification confidence (0-1)"
+  },
+  "economic_indicators": {
+    "GDP_Growth": "GDP growth rate (%, annualized)",
+    "Inflation_Rate": "Inflation rate (%, annualized)",
+    "Unemployment_Rate": "Unemployment rate (%)",
+    "Fed_Funds_Rate": "Federal funds rate (%)",
+    "Treasury_10Y": "10-year treasury yield (%)",
+    "VIX": "Volatility index (fear gauge)"
+  }
+}
