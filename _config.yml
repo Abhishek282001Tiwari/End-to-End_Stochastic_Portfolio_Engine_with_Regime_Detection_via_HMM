@@ -1,0 +1,72 @@
+# Site settings
+title: "Stochastic Portfolio Engine"
+description: "End-to-End Portfolio Management with Hidden Markov Model Regime Detection"
+url: "https://abhishek282001tiwari.github.io"
+baseurl: "/End-to-End_Stochastic_Portfolio_Engine_with_Regime_Detection_via_HMM"
+
+# Personal information
+author: "Abhishek Tiwari"
+email: "abhishekt282001@gmail.com"
+linkedin: "www.linkedin.com/in/abhishek282001"
+github: "abhishek282001tiwari"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Navigation
+header_pages:
+  - about.md
+  - documentation.md
+  - results.md
+  - research.md
+  - contact.md
+
+# Collections
+collections:
+  projects:
+    output: true
+    permalink: /:collection/:name/
+  research:
+    output: true
+    permalink: /:collection/:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+      type: "projects"
+    values:
+      layout: "project"
+  - scope:
+      path: ""
+      type: "research"
+    values:
+      layout: "research"
+
+# Exclude from processing
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/
+  - src/
+  - tests/
+  - config/
+  - data/
+  - "*.py"
