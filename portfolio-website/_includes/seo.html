@@ -1,0 +1,146 @@
+<!-- SEO Meta Tags -->
+<meta name="description" content="{{ page.description | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
+<meta name="keywords" content="quantitative finance, portfolio optimization, machine learning, hidden markov models, algorithmic trading, risk management, financial engineering">
+<meta name="author" content="{{ site.author.name }}">
+<meta name="robots" content="index, follow">
+<meta name="language" content="en">
+<meta name="revisit-after" content="7 days">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="{% if page.layout == 'home' %}website{% else %}article{% endif %}">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta property="og:title" content="{% if page.title %}{{ page.title | escape }} | {% endif %}{{ site.title | escape }}">
+<meta property="og:description" content="{{ page.description | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
+<meta property="og:image" content="{{ '/assets/img/og-image.jpg' | absolute_url }}">
+<meta property="og:site_name" content="{{ site.title }}">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="{{ page.url | absolute_url }}">
+<meta property="twitter:title" content="{% if page.title %}{{ page.title | escape }} | {% endif %}{{ site.title | escape }}">
+<meta property="twitter:description" content="{{ page.description | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
+<meta property="twitter:image" content="{{ '/assets/img/og-image.jpg' | absolute_url }}">
+<meta property="twitter:creator" content="@{{ site.author.twitter | default: 'username' }}">
+
+<!-- LinkedIn -->
+<meta property="linkedin:owner" content="{{ site.author.linkedin }}">
+
+<!-- Structured Data for Organization -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "{{ site.author.name }}",
+  "jobTitle": "{{ site.author.title }}",
+  "description": "{{ site.author.bio }}",
+  "url": "{{ site.url }}",
+  "sameAs": [
+    "https://linkedin.com/in/{{ site.author.linkedin }}",
+    "https://github.com/{{ site.author.github }}"
+  ],
+  "knowsAbout": [
+    "Quantitative Finance",
+    "Portfolio Optimization",
+    "Machine Learning",
+    "Risk Management",
+    "Algorithmic Trading",
+    "Financial Engineering"
+  ],
+  "alumniOf": [
+    {
+      "@type": "EducationalOrganization",
+      "name": "Stanford University"
+    },
+    {
+      "@type": "EducationalOrganization", 
+      "name": "Massachusetts Institute of Technology"
+    }
+  ]
+}
+</script>
+
+<!-- Structured Data for Portfolio Projects -->
+{% if page.layout == 'home' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "{{ site.portfolio.project_name }}",
+  "description": "{{ site.description }}",
+  "url": "{{ site.url }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ site.author.name }}"
+  },
+  "applicationCategory": "Financial Software",
+  "operatingSystem": "Cross-platform",
+  "programmingLanguage": {{ site.portfolio.technologies | jsonify }},
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+{% endif %}
+
+<!-- Canonical URL -->
+<link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
+
+<!-- Alternate Language Links -->
+<link rel="alternate" hreflang="en" href="{{ page.url | absolute_url }}">
+
+<!-- DNS Prefetch for Performance -->
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+<link rel="dns-prefetch" href="//www.google-analytics.com">
+
+<!-- Preconnect for Critical Third-party Origins -->
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+<!-- Resource Hints -->
+<link rel="prefetch" href="{{ '/documentation/' | relative_url }}">
+<link rel="prefetch" href="{{ '/results/' | relative_url }}">
+
+<!-- Security Headers via Meta Tags -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="X-XSS-Protection" content="1; mode=block">
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+
+<!-- Theme Color for Mobile Browsers -->
+<meta name="theme-color" content="#2563eb">
+<meta name="msapplication-navbutton-color" content="#2563eb">
+<meta name="apple-mobile-web-app-status-bar-style" content="#2563eb">
+
+<!-- Web App Manifest -->
+<link rel="manifest" href="{{ '/manifest.json' | relative_url }}">
+
+<!-- Favicons -->
+<link rel="icon" type="image/x-icon" href="{{ '/assets/img/favicon.ico' | relative_url }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/img/favicon-32x32.png' | relative_url }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/img/favicon-16x16.png' | relative_url }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/img/apple-touch-icon.png' | relative_url }}">
+
+<!-- Rich Snippets for Research Publications -->
+{% if page.layout == 'research' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": "Research Publications in Quantitative Finance",
+  "author": {
+    "@type": "Person",
+    "name": "{{ site.author.name }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{ site.title }}"
+  },
+  "datePublished": "{{ site.time | date: '%Y-%m-%d' }}",
+  "description": "Academic research contributions in quantitative finance, including novel HMM implementations and portfolio optimization techniques."
+}
+</script>
+{% endif %}

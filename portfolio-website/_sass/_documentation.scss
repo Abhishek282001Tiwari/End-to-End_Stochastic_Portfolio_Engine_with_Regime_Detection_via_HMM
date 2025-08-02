@@ -1,0 +1,218 @@
+/* Documentation page styles */
+.post-content {
+  /* Mathematical equations */
+  .MathJax {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  
+  /* Code syntax highlighting */
+  .language-python {
+    .k { color: #0000FF; } /* Keywords */
+    .s { color: #008000; } /* Strings */
+    .c { color: #808080; } /* Comments */
+    .n { color: #000000; } /* Names */
+    .o { color: #AA22FF; } /* Operators */
+  }
+  
+  .language-bash {
+    .c { color: #808080; } /* Comments */
+    .nv { color: #19177C; } /* Variables */
+  }
+  
+  .language-yaml {
+    .s { color: #008000; } /* Strings */
+    .p { color: #000000; } /* Punctuation */
+  }
+  
+  /* Inline math */
+  .math-inline {
+    background-color: var(--bg-lighter);
+    padding: 0.125rem 0.25rem;
+    border-radius: var(--radius);
+    font-family: 'Times New Roman', serif;
+  }
+  
+  /* Display math */
+  .math-display {
+    text-align: center;
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background-color: var(--bg-lighter);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+  }
+  
+  /* Algorithm blocks */
+  .algorithm {
+    background-color: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin: 2rem 0;
+    
+    .algorithm-title {
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 1rem;
+      font-size: 1.125rem;
+    }
+    
+    .algorithm-steps {
+      ol {
+        counter-reset: step-counter;
+        list-style: none;
+        margin-left: 0;
+        
+        li {
+          counter-increment: step-counter;
+          margin-bottom: 0.75rem;
+          position: relative;
+          padding-left: 2rem;
+          
+          &::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: var(--primary-color);
+            color: white;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+  
+  /* Performance metrics tables */
+  .performance-table {
+    .metric-positive {
+      color: var(--success-color);
+      font-weight: 600;
+    }
+    
+    .metric-negative {
+      color: var(--error-color);
+      font-weight: 600;
+    }
+    
+    .metric-neutral {
+      color: var(--text-color);
+      font-weight: 600;
+    }
+  }
+  
+  /* Code file structure */
+  .file-tree {
+    background-color: var(--bg-lighter);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    margin: 1rem 0;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    
+    .folder {
+      color: var(--primary-color);
+      font-weight: 600;
+      
+      &::before {
+        content: "📁 ";
+      }
+    }
+    
+    .file {
+      color: var(--text-color);
+      margin-left: 1rem;
+      
+      &::before {
+        content: "📄 ";
+      }
+    }
+    
+    .python-file::before {
+      content: "🐍 ";
+    }
+    
+    .config-file::before {
+      content: "⚙️ ";
+    }
+    
+    .data-file::before {
+      content: "📊 ";
+    }
+  }
+  
+  /* Warning and info boxes */
+  .warning-box {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-left: 4px solid var(--warning-color);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    
+    .warning-title {
+      font-weight: 600;
+      color: var(--warning-color);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      
+      &::before {
+        content: "⚠️";
+      }
+    }
+  }
+  
+  .info-box {
+    background-color: #d1ecf1;
+    border: 1px solid #bee5eb;
+    border-left: 4px solid var(--primary-color);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    
+    .info-title {
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      
+      &::before {
+        content: "ℹ️";
+      }
+    }
+  }
+  
+  .success-box {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-left: 4px solid var(--success-color);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    
+    .success-title {
+      font-weight: 600;
+      color: var(--success-color);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      
+      &::before {
+        content: "✅";
+      }
+    }
+  }
+}

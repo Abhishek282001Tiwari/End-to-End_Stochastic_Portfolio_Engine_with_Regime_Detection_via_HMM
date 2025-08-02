@@ -1,0 +1,21 @@
+Contact: mailto:security@your-domain.com
+Contact: https://your-domain.com/about/#contact
+Expires: 2025-12-31T23:59:59.000Z
+Encryption: https://your-domain.com/pgp-key.txt
+Preferred-Languages: en
+Canonical: https://your-domain.com/.well-known/security.txt
+Policy: https://your-domain.com/security-policy/
+
+# Security Policy
+# 
+# If you discover a security vulnerability, please report it responsibly:
+# 1. Email security@your-domain.com with details
+# 2. Include steps to reproduce the issue
+# 3. Allow reasonable time for investigation and remediation
+# 4. Do not publicly disclose until issue is resolved
+#
+# We appreciate responsible disclosure and will acknowledge
+# security researchers who help improve our security.
+
+# Bug Bounty: Not available for personal portfolio site
+# Safe Harbor: Research conducted in good faith is welcomed

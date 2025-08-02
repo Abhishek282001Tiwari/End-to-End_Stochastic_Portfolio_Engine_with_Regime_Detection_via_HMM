@@ -1,0 +1,86 @@
+# Site settings
+title: Stochastic Portfolio Engine | Quantitative Finance Portfolio
+email: your.email@domain.com
+description: >-
+  Professional portfolio showcasing advanced quantitative finance research 
+  and implementation of stochastic portfolio optimization with HMM regime detection.
+  Demonstrating expertise in algorithmic trading, risk management, and financial modeling.
+
+baseurl: ""
+url: "https://yourdomain.github.io"
+
+# Author information
+author:
+  name: "Your Name"
+  title: "Quantitative Finance Research Engineer"
+  bio: "Specializing in stochastic portfolio optimization, regime detection, and algorithmic trading systems"
+  location: "Your Location"
+  email: "your.email@domain.com"
+  linkedin: "your-linkedin"
+  github: "your-github"
+
+# Jekyll configuration
+markdown: kramdown
+highlighter: rouge
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Collections
+collections:
+  research:
+    output: true
+    permalink: /:collection/:name/
+  documentation:
+    output: true
+    permalink: /:collection/:name/
+  results:
+    output: true
+    permalink: /:collection/:name/
+
+# Navigation
+navigation:
+  - title: Home
+    url: /
+  - title: Technical Documentation
+    url: /documentation/
+  - title: Results & Analytics
+    url: /results/
+  - title: Research Publications
+    url: /research/
+  - title: Code Repository
+    url: /code/
+  - title: About
+    url: /about/
+
+# Build settings
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
+# SEO and Analytics
+google_analytics: "G-XXXXXXXXXX"
+google_site_verification: "your-verification-code"
+
+# Professional settings
+portfolio:
+  project_name: "End-to-End Stochastic Portfolio Engine with Regime Detection via HMM"
+  technologies: ["Python", "NumPy", "SciPy", "Pandas", "Scikit-learn", "HMMLearn", "CVXPY", "Matplotlib", "Seaborn", "Plotly"]
+  research_areas: ["Quantitative Finance", "Algorithmic Trading", "Portfolio Optimization", "Risk Management", "Machine Learning"]
+  key_achievements:
+    - "95%+ regime detection accuracy using advanced HMM models"
+    - "20%+ improvement in risk-adjusted returns over benchmark"
+    - "Real-time portfolio optimization with Monte Carlo simulation"
+    - "Comprehensive backtesting framework with realistic transaction costs"

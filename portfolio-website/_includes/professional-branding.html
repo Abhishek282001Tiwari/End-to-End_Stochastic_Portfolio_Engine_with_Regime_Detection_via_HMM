@@ -1,0 +1,361 @@
+<!-- Professional Branding and Identity -->
+
+<!-- Professional Email Configuration -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "{{ site.author.name }}",
+  "jobTitle": "{{ site.author.title }}",
+  "email": "{{ site.author.email }}",
+  "url": "{{ site.url }}",
+  "image": "{{ '/assets/img/professional-headshot.jpg' | absolute_url }}",
+  "sameAs": [
+    "https://linkedin.com/in/{{ site.author.linkedin }}",
+    "https://github.com/{{ site.author.github }}",
+    "https://scholar.google.com/citations?user={{ site.author.google_scholar }}",
+    "https://orcid.org/{{ site.author.orcid }}",
+    "https://researchgate.net/profile/{{ site.author.researchgate }}"
+  ],
+  "knowsAbout": [
+    "Quantitative Finance",
+    "Portfolio Optimization", 
+    "Machine Learning",
+    "Risk Management",
+    "Algorithmic Trading",
+    "Hidden Markov Models",
+    "Financial Engineering",
+    "Stochastic Processes"
+  ],
+  "alumniOf": [
+    {
+      "@type": "EducationalOrganization",
+      "name": "Stanford University",
+      "department": "Financial Engineering"
+    },
+    {
+      "@type": "EducationalOrganization",
+      "name": "Massachusetts Institute of Technology",
+      "department": "Mathematics and Computer Science"
+    }
+  ],
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Financial Technology Firm",
+    "jobTitle": "Senior Quantitative Research Engineer"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "{{ site.author.city }}",
+    "addressRegion": "{{ site.author.state }}",
+    "addressCountry": "{{ site.author.country }}"
+  }
+}
+</script>
+
+<!-- Professional Contact Information -->
+<div class="professional-contact" style="display: none;">
+  <!-- This will be used for email forwarding and contact management -->
+  <div class="contact-methods">
+    <div class="primary-email">{{ site.author.email }}</div>
+    <div class="professional-phone">{{ site.author.phone }}</div>
+    <div class="linkedin-profile">https://linkedin.com/in/{{ site.author.linkedin }}</div>
+    <div class="github-profile">https://github.com/{{ site.author.github }}</div>
+  </div>
+  
+  <!-- Professional scheduling links -->
+  <div class="scheduling-links">
+    <div class="calendly-link">{{ site.author.calendly }}</div>
+    <div class="zoom-link">{{ site.author.zoom_personal }}</div>
+  </div>
+</div>
+
+<!-- Google Workspace Integration -->
+{% if site.google_workspace.enabled %}
+<script>
+// Google Workspace integration for professional communication
+window.googleWorkspaceConfig = {
+  domain: '{{ site.google_workspace.domain }}',
+  calendarId: '{{ site.google_workspace.calendar_id }}',
+  meetEnabled: {{ site.google_workspace.meet_enabled | default: true }},
+  driveEnabled: {{ site.google_workspace.drive_enabled | default: true }}
+};
+
+// Professional email signature generator
+function generateEmailSignature() {
+  return `
+{{ site.author.name }}
+{{ site.author.title }}
+{{ site.author.organization }}
+
+📧 {{ site.author.email }}
+🔗 {{ site.url }}
+💼 https://linkedin.com/in/{{ site.author.linkedin }}
+📊 Portfolio: {{ site.url }}
+
+{{ site.author.signature_tagline }}
+  `.trim();
+}
+
+// Copy email signature to clipboard
+function copyEmailSignature() {
+  const signature = generateEmailSignature();
+  navigator.clipboard.writeText(signature).then(() => {
+    console.log('Email signature copied to clipboard');
+  });
+}
+
+// Professional calendar integration
+function scheduleConsultation() {
+  if (window.googleWorkspaceConfig.calendarId) {
+    const calendarUrl = `https://calendar.google.com/calendar/u/0/selfsched?sstoken=${window.googleWorkspaceConfig.calendarId}`;
+    window.open(calendarUrl, '_blank');
+  } else if ('{{ site.author.calendly }}') {
+    window.open('{{ site.author.calendly }}', '_blank');
+  }
+}
+</script>
+{% endif %}
+
+<!-- Professional Brand Colors and Styling -->
+<style>
+:root {
+  /* Professional brand colors */
+  --brand-primary: #2563eb;
+  --brand-secondary: #1e40af;
+  --brand-accent: #3b82f6;
+  --brand-success: #059669;
+  --brand-warning: #d97706;
+  --brand-error: #dc2626;
+  
+  /* Professional typography */
+  --brand-font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --brand-font-secondary: 'JetBrains Mono', 'Fira Code', monospace;
+  --brand-font-serif: 'Times New Roman', serif;
+  
+  /* Professional spacing */
+  --brand-spacing-xs: 0.25rem;
+  --brand-spacing-sm: 0.5rem;
+  --brand-spacing-md: 1rem;
+  --brand-spacing-lg: 2rem;
+  --brand-spacing-xl: 4rem;
+  
+  /* Professional shadows */
+  --brand-shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --brand-shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --brand-shadow-strong: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Professional logo and branding elements */
+.professional-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: var(--brand-primary);
+  text-decoration: none;
+}
+
+.professional-logo:hover {
+  color: var(--brand-secondary);
+}
+
+.brand-icon {
+  width: 2rem;
+  height: 2rem;
+  background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+/* Professional business card styling */
+.digital-business-card {
+  background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+  color: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: var(--brand-shadow-strong);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.business-card-header {
+  margin-bottom: 1rem;
+}
+
+.business-card-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.business-card-title {
+  font-size: 1rem;
+  opacity: 0.9;
+  margin-bottom: 1rem;
+}
+
+.business-card-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.business-card-contact a {
+  color: white;
+  text-decoration: none;
+  opacity: 0.9;
+  transition: opacity 0.2s;
+}
+
+.business-card-contact a:hover {
+  opacity: 1;
+}
+</style>
+
+<!-- Professional QR Code Integration -->
+<script>
+// Generate QR codes for professional networking
+function generateProfessionalQR() {
+  const vCardData = `BEGIN:VCARD
+VERSION:3.0
+FN:{{ site.author.name }}
+TITLE:{{ site.author.title }}
+ORG:{{ site.author.organization }}
+EMAIL:{{ site.author.email }}
+URL:{{ site.url }}
+END:VCARD`;
+
+  // You can integrate with QR code libraries here
+  console.log('vCard data for QR generation:', vCardData);
+  
+  return vCardData;
+}
+
+// Professional networking functions
+window.professionalNetworking = {
+  generateVCard: generateProfessionalQR,
+  scheduleConsultation: scheduleConsultation,
+  copyEmailSignature: copyEmailSignature,
+  
+  // LinkedIn connection helper
+  connectLinkedIn: function() {
+    window.open('https://linkedin.com/in/{{ site.author.linkedin }}', '_blank');
+  },
+  
+  // GitHub follow helper
+  followGitHub: function() {
+    window.open('https://github.com/{{ site.author.github }}', '_blank');
+  },
+  
+  // Professional email composer
+  composeEmail: function(subject = '', body = '') {
+    const emailUrl = `mailto:{{ site.author.email }}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = emailUrl;
+  },
+  
+  // Download resume
+  downloadResume: function() {
+    window.open('{{ "/assets/documents/resume.pdf" | relative_url }}', '_blank');
+  }
+};
+</script>
+
+<!-- Professional Brand Consistency Check -->
+<script>
+// Ensure consistent branding across the site
+document.addEventListener('DOMContentLoaded', function() {
+  // Check for consistent brand colors
+  const brandElements = document.querySelectorAll('.btn-primary, .brand-primary');
+  brandElements.forEach(element => {
+    const computedStyle = getComputedStyle(element);
+    const backgroundColor = computedStyle.backgroundColor;
+    
+    // Log for brand consistency monitoring
+    console.log('Brand element color check:', {
+      element: element.className,
+      backgroundColor: backgroundColor
+    });
+  });
+  
+  // Add professional branding to dynamically generated content
+  const dynamicElements = document.querySelectorAll('[data-professional-brand]');
+  dynamicElements.forEach(element => {
+    element.style.borderLeft = '4px solid var(--brand-primary)';
+    element.style.paddingLeft = 'var(--brand-spacing-md)';
+  });
+});
+</script>
+
+<!-- Professional Email Templates -->
+<script>
+// Professional email templates for different scenarios
+window.emailTemplates = {
+  collaboration: {
+    subject: 'Collaboration Opportunity - Quantitative Finance Research',
+    body: `Dear [Name],
+
+I hope this message finds you well. I came across your work in [specific area] and was impressed by [specific detail].
+
+I am currently working on [brief description of your project] and believe there may be opportunities for collaboration, particularly in [specific area of overlap].
+
+I would welcome the opportunity to discuss this further at your convenience. You can learn more about my work at {{ site.url }}.
+
+Best regards,
+{{ site.author.name }}
+{{ site.author.title }}
+{{ site.url }}`
+  },
+  
+  consulting: {
+    subject: 'Quantitative Finance Consulting Inquiry',
+    body: `Dear [Name],
+
+Thank you for your interest in my quantitative finance expertise. I offer consulting services in:
+
+• Portfolio Optimization & Risk Management
+• Algorithmic Trading Strategy Development
+• Machine Learning Applications in Finance
+• Custom Financial Model Development
+
+Please feel free to schedule a consultation to discuss your specific needs: {{ site.author.calendly }}
+
+Best regards,
+{{ site.author.name }}
+{{ site.author.title }}`
+  },
+  
+  research: {
+    subject: 'Research Collaboration - [Specific Topic]',
+    body: `Dear [Name],
+
+I am writing to explore potential research collaboration opportunities. My recent work on [specific research area] aligns closely with your expertise in [their expertise].
+
+I have attached my latest research on [topic] and would be interested in discussing how we might collaborate on [specific opportunity].
+
+Portfolio and publications: {{ site.url }}
+
+Looking forward to your thoughts.
+
+Best regards,
+{{ site.author.name }}`
+  }
+};
+
+// Function to populate email with template
+function useEmailTemplate(templateType, customSubject = '', customRecipient = '') {
+  const template = window.emailTemplates[templateType];
+  if (template) {
+    const subject = customSubject || template.subject;
+    const body = template.body;
+    
+    window.professionalNetworking.composeEmail(subject, body);
+  }
+}
+</script>

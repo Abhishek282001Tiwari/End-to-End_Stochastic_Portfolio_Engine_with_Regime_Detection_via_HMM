@@ -1,0 +1,308 @@
+<!-- Google Analytics 4 -->
+{% if site.google_analytics and jekyll.environment == 'production' %}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '{{ site.google_analytics }}', {
+    // Enhanced measurement settings
+    enhanced_measurement_settings: {
+      scrolls: true,
+      outbound_clicks: true,
+      site_search: true,
+      video_engagement: true,
+      file_downloads: true
+    },
+    // Custom parameters
+    custom_map: {
+      'dimension1': 'page_category',
+      'dimension2': 'content_type',
+      'dimension3': 'user_type'
+    },
+    // Privacy settings
+    anonymize_ip: true,
+    allow_ad_personalization_signals: false,
+    allow_google_signals: false
+  });
+
+  // Track portfolio-specific events
+  function trackPortfolioEvent(action, category, label, value) {
+    gtag('event', action, {
+      event_category: category,
+      event_label: label,
+      value: value
+    });
+  }
+
+  // Track research paper downloads
+  document.addEventListener('click', function(e) {
+    if (e.target.matches('a[href$=".pdf"]')) {
+      gtag('event', 'file_download', {
+        file_name: e.target.href.split('/').pop(),
+        file_extension: 'pdf',
+        link_text: e.target.textContent
+      });
+    }
+  });
+
+  // Track code repository views
+  document.addEventListener('click', function(e) {
+    if (e.target.matches('a[href*="github.com"]')) {
+      gtag('event', 'click', {
+        event_category: 'external_link',
+        event_label: 'github_repository',
+        transport_type: 'beacon'
+      });
+    }
+  });
+
+  // Track performance chart interactions
+  window.addEventListener('load', function() {
+    if (typeof Chart !== 'undefined') {
+      gtag('event', 'page_view', {
+        event_category: 'engagement',
+        event_label: 'charts_loaded',
+        custom_parameter: 'portfolio_analytics'
+      });
+    }
+  });
+
+  // Track contact form submissions
+  function trackContactSubmission(formType) {
+    gtag('event', 'form_submit', {
+      event_category: 'engagement',
+      event_label: formType,
+      transport_type: 'beacon'
+    });
+  }
+
+  // Track scroll depth
+  let maxScroll = 0;
+  window.addEventListener('scroll', function() {
+    const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+    if (scrollPercent > maxScroll && scrollPercent % 25 === 0) {
+      maxScroll = scrollPercent;
+      gtag('event', 'scroll', {
+        event_category: 'engagement',
+        event_label: scrollPercent + '%',
+        value: scrollPercent
+      });
+    }
+  });
+</script>
+{% endif %}
+
+<!-- Microsoft Clarity (optional) -->
+{% if site.clarity_id and jekyll.environment == 'production' %}
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "{{ site.clarity_id }}");
+</script>
+{% endif %}
+
+<!-- Hotjar (optional) -->
+{% if site.hotjar_id and jekyll.environment == 'production' %}
+<script>
+  (function(h,o,t,j,a,r){
+    h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+    h._hjSettings={hjid:{{ site.hotjar_id }},hjsv:6};
+    a=o.getElementsByTagName('head')[0];
+    r=o.createElement('script');r.async=1;
+    r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+    a.appendChild(r);
+  })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+{% endif %}
+
+<!-- Custom Portfolio Analytics -->
+<script>
+// Portfolio-specific analytics tracking
+class PortfolioAnalytics {
+  constructor() {
+    this.startTime = Date.now();
+    this.interactions = [];
+    this.setupEventListeners();
+  }
+
+  setupEventListeners() {
+    // Track button clicks
+    document.addEventListener('click', (e) => {
+      if (e.target.matches('.btn')) {
+        this.trackInteraction('button_click', {
+          button_text: e.target.textContent.trim(),
+          button_type: e.target.className,
+          page_section: this.getCurrentSection(e.target)
+        });
+      }
+    });
+
+    // Track tab switches
+    document.addEventListener('click', (e) => {
+      if (e.target.matches('.tab-button')) {
+        this.trackInteraction('tab_switch', {
+          tab_name: e.target.textContent.trim(),
+          previous_tab: document.querySelector('.tab-button.active')?.textContent.trim()
+        });
+      }
+    });
+
+    // Track chart interactions
+    if (typeof Chart !== 'undefined') {
+      Chart.defaults.plugins.legend.onClick = (e, legendItem, legend) => {
+        this.trackInteraction('chart_legend_click', {
+          chart_type: legend.chart.config.type,
+          dataset_label: legendItem.text
+        });
+        Chart.defaults.plugins.legend.onClick.call(this, e, legendItem, legend);
+      };
+    }
+
+    // Track performance section engagement
+    this.trackSectionEngagement();
+  }
+
+  trackInteraction(action, data = {}) {
+    const interaction = {
+      action,
+      timestamp: Date.now(),
+      page: window.location.pathname,
+      ...data
+    };
+    
+    this.interactions.push(interaction);
+    
+    // Send to analytics if available
+    if (typeof gtag !== 'undefined') {
+      gtag('event', action, {
+        event_category: 'portfolio_interaction',
+        event_label: JSON.stringify(data),
+        custom_parameter: 'quantitative_finance'
+      });
+    }
+  }
+
+  getCurrentSection(element) {
+    const section = element.closest('section');
+    return section ? section.className || section.id || 'unknown_section' : 'no_section';
+  }
+
+  trackSectionEngagement() {
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          this.trackInteraction('section_view', {
+            section_id: entry.target.id || 'unnamed_section',
+            section_class: entry.target.className,
+            visibility_ratio: entry.intersectionRatio
+          });
+        }
+      });
+    }, { threshold: 0.5 });
+
+    sections.forEach(section => observer.observe(section));
+  }
+
+  // Send engagement summary before page unload
+  sendEngagementSummary() {
+    const timeOnPage = Date.now() - this.startTime;
+    const summary = {
+      time_on_page: timeOnPage,
+      total_interactions: this.interactions.length,
+      interaction_types: [...new Set(this.interactions.map(i => i.action))],
+      engagement_score: this.calculateEngagementScore()
+    };
+
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'engagement_summary', {
+        event_category: 'portfolio_engagement',
+        event_label: JSON.stringify(summary),
+        value: summary.engagement_score,
+        transport_type: 'beacon'
+      });
+    }
+  }
+
+  calculateEngagementScore() {
+    const timeWeight = Math.min((Date.now() - this.startTime) / 60000, 10); // Max 10 points for time
+    const interactionWeight = Math.min(this.interactions.length, 20); // Max 20 points for interactions
+    return Math.round(timeWeight + interactionWeight);
+  }
+}
+
+// Initialize portfolio analytics
+const portfolioAnalytics = new PortfolioAnalytics();
+
+// Send summary before page unload
+window.addEventListener('beforeunload', () => {
+  portfolioAnalytics.sendEngagementSummary();
+});
+
+// Expose global function for custom tracking
+window.trackPortfolioEvent = function(action, data) {
+  portfolioAnalytics.trackInteraction(action, data);
+};
+</script>
+
+<!-- Performance monitoring -->
+<script>
+// Core Web Vitals monitoring
+function measureWebVitals() {
+  if ('PerformanceObserver' in window) {
+    // Largest Contentful Paint
+    new PerformanceObserver((entryList) => {
+      for (const entry of entryList.getEntries()) {
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'web_vitals', {
+            event_category: 'performance',
+            event_label: 'LCP',
+            value: Math.round(entry.startTime)
+          });
+        }
+      }
+    }).observe({ entryTypes: ['largest-contentful-paint'] });
+
+    // First Input Delay
+    new PerformanceObserver((entryList) => {
+      for (const entry of entryList.getEntries()) {
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'web_vitals', {
+            event_category: 'performance',
+            event_label: 'FID',
+            value: Math.round(entry.processingStart - entry.startTime)
+          });
+        }
+      }
+    }).observe({ entryTypes: ['first-input'] });
+
+    // Cumulative Layout Shift
+    let clsValue = 0;
+    new PerformanceObserver((entryList) => {
+      for (const entry of entryList.getEntries()) {
+        if (!entry.hadRecentInput) {
+          clsValue += entry.value;
+        }
+      }
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'web_vitals', {
+          event_category: 'performance',
+          event_label: 'CLS',
+          value: Math.round(clsValue * 1000)
+        });
+      }
+    }).observe({ entryTypes: ['layout-shift'] });
+  }
+}
+
+// Measure vitals when page is ready
+if (document.readyState === 'complete') {
+  measureWebVitals();
+} else {
+  window.addEventListener('load', measureWebVitals);
+}
+</script>

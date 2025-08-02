@@ -1,0 +1,224 @@
+/* Results page specific styles */
+
+/* Animation classes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Chart container improvements */
+.chart-container {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+  
+  canvas {
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  }
+}
+
+/* Interactive elements */
+.metric-card {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  &:hover::before {
+    left: 100%;
+  }
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+/* Tab system improvements */
+.analytics-tabs {
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--border-color);
+  }
+}
+
+.tab-button {
+  position: relative;
+  transition: all 0.3s ease;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--primary-color);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+  
+  &.active::after,
+  &:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+/* Enhanced data tables */
+.metrics-table {
+  position: relative;
+  
+  tr {
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background-color: var(--bg-lighter);
+    }
+  }
+  
+  th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+}
+
+/* Loading states */
+.loading-placeholder {
+  background: linear-gradient(90deg, var(--bg-lighter) 25%, var(--bg-light) 50%, var(--bg-lighter) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: var(--radius);
+  height: 20px;
+  margin: 0.5rem 0;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Responsive chart containers */
+@media (max-width: 768px) {
+  .chart-container {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .chart-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .results-dashboard {
+    padding: 1rem 0.5rem;
+  }
+}
+
+/* Print styles for results */
+@media print {
+  .analytics-tabs,
+  .tab-button {
+    display: none;
+  }
+  
+  .tab-content {
+    display: block !important;
+    page-break-inside: avoid;
+  }
+  
+  .chart-container {
+    page-break-inside: avoid;
+    margin-bottom: 2rem;
+  }
+  
+  .metric-card {
+    box-shadow: none;
+    border: 1px solid var(--border-color);
+    page-break-inside: avoid;
+  }
+}
+
+/* Accessibility improvements */
+.tab-button:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.metric-card:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .metric-card {
+    border: 2px solid var(--text-color);
+  }
+  
+  .chart-container {
+    border: 1px solid var(--text-color);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in,
+  .metric-card,
+  .tab-button {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Dark mode support (future enhancement) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #1a1a1a;
+    --text-color: #ffffff;
+    --text-light: #cccccc;
+    --bg-light: #2a2a2a;
+    --bg-lighter: #3a3a3a;
+    --border-color: #444444;
+  }
+}
